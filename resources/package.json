@@ -1,0 +1,11 @@
+{
+  "name": "resources",
+  "version": "1.0.0",
+  "description": "Serverless project to deploy resources",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "npm i && sls deploy --stage dev --force --aws-profile personal"
+  },
+  "author": "",
+  "license": "ISC"
+}

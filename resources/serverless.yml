@@ -1,0 +1,104 @@
+service: am-resouces
+
+provider:
+  name: aws
+  versionFunctions: false
+  runtime: nodejs10.x
+  deploymentBucket:
+    name: am-resources-bucket-${self:custom.stage}
+
+custom:
+  stage: ${env:SLS_STAGE, opt:stage, self:provider.stage}
+
+layers:
+  ChromiumSelenium:
+    path: ./bin
+    layerName: SeleniumLayer
+    description: Headless Chromium and Selenium WebDriver
+    compatibleRuntimes: 
+      - nodejs8.10
+      - python3.7
+      - python2.7
+      - go1.x
+      - java8
+    licenseInfo: MIT
+    allowedAccounts: 
+      - '*'
+    retain: false 
+
+resources:
+  Resources:
+    defaultRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: ${self:service}-${self:custom.stage}-${self:provider.region}-defaultRole
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: am-defaultServerlessPolicy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource:
+                    - 'Fn::Join':
+                      - ':'
+                      -
+                        - 'arn:aws:logs'
+                        - Ref: 'AWS::Region'
+                        - Ref: 'AWS::AccountId'
+                        - 'log-group:/aws/lambda/*:*:*'
+                - Effect: Allow
+                  Action:
+                    - SNS:Publish
+                  Resource: "*"
+                - Effect: Allow
+                  Action:
+                    - dynamodb:Query
+                    - dynamodb:Scan
+                    - dynamodb:GetItem
+                    - dynamodb:PutItem
+                    - dynamodb:UpdateItem
+                    - dynamodb:DeleteItem
+                    - dynamodb:BatchGetItem
+                    - dynamodb:BatchWriteItem
+                    - dynamodb:DescribeTable
+                  Resource: "*"
+                - Effect: Allow
+                  Action:
+                    - dynamodb:GetRecords
+                    - dynamodb:GetShardIterator
+                    - dynamodb:DescribeStream
+                    - dynamodb:ListStreams
+                  Resource: "*"
+                - Effect: Allow
+                  Action:
+                    - lambda:InvokeFunction
+                    - lambda:InvokeAsync
+                  Resource: "*"
+                - Effect: Allow
+                  Action:
+                    - xray:PutTraceSegments
+                    - xray:PutTelemetryRecords
+                  Resource:
+                    - "*"
+
+  Outputs:
+    functionRoleArn:
+      Description: Default role arn created
+      Value:
+        Fn::GetAtt:
+          - defaultRole
+          - Arn
+      Export:
+        Name: functionRoleArn-${self:custom.stage}
