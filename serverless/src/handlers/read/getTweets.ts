@@ -1,11 +1,11 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { By } from "selenium-webdriver";
-import { success, buildResponseError } from "../lib/amAPIGatewayProxyResult";
-import { buildDriver } from "../lib/chromium";
 import { Driver } from "selenium-webdriver/chrome";
+import { buildResponseError, success } from "../../lib/amAPIGatewayProxyResult";
+import { buildDriver } from "../../lib/chromium";
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-  
+
   event
   const driver: Driver = buildDriver();
 
@@ -15,18 +15,18 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
     let data = [];
 
-    for(let tweet of tweets){
+    for (let tweet of tweets) {
       const tweetText = await tweet.findElement(By.className('TweetTextSize')).getText();
-      
+
       data.push({
-        'tweetText' : tweetText,
+        'tweetText': tweetText,
       });
-      
+
     }
 
     return success(data);
 
-  }catch (e){
+  } catch (e) {
     console.log(e);
     return buildResponseError(e);
   } finally {
