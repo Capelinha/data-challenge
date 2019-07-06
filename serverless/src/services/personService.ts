@@ -12,7 +12,7 @@ export class PersonService {
 
   /**
    * Create a new person
-   * @param user object that represent the person
+   * @param person object that represent the person
    */
   public async createPerson(person: Person) {
     return this.dataMapper.put(person);

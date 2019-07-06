@@ -26,7 +26,7 @@ custom:
 
 functions:
   getTweets:
-    handler: src/handlers/read/getTweets.handler
+    handler: src/handlers/scrapers/scraperTweets.handler
     layers: 
       - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:48
     memorySize: 1156
