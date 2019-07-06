@@ -3,14 +3,23 @@ service:
 
 plugins:
   - serverless-webpack
+  - serverless-layers
+
+package:
+  individually: false
+  exclude:
+    - node_modules/**
+  excludeDevDependencies: true
 
 provider:
   name: aws
   runtime: nodejs8.10
+  versionFunctions: false
   role:
     Fn::ImportValue: functionRoleArn-${self:custom.stage}
   deploymentBucket:
     name: am-serverless-bucket-${self:custom.stage}
+  environment: ${file(./conf/env.yml):${self:custom.stage}}
 
 custom:
   stage: ${env:SLS_STAGE, opt:stage, self:provider.stage}
@@ -19,19 +28,16 @@ functions:
   getTweets:
     handler: src/handlers/read/getTweets.handler
     layers: 
-      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:46
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:48
     memorySize: 1156
     timeout: 20
     events:
-      - http:
-          path: tweets
-          method: get
-          cors: true
-  createUser:
-    handler: src/handlers/create/createUser.handler
+      - sns: search
+  createPerson:
+    handler: src/handlers/create/createPerson.handler
     events:
       - http:
           method: post
-          path: user
+          path: person
           cors: true
 

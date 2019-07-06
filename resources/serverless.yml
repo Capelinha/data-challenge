@@ -9,6 +9,8 @@ provider:
 
 custom:
   stage: ${env:SLS_STAGE, opt:stage, self:provider.stage}
+  table:
+    people: ${self:custom.stage}.people
 
 layers:
   ChromiumSelenium:
@@ -61,6 +63,7 @@ resources:
                 - Effect: Allow
                   Action:
                     - SNS:Publish
+                    - SNS:Subscribe
                   Resource: "*"
                 - Effect: Allow
                   Action:
@@ -92,7 +95,20 @@ resources:
                     - xray:PutTelemetryRecords
                   Resource:
                     - "*"
-
+    peopleTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:custom.table.people}"
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: personId
+            AttributeType: S          
+        KeySchema:
+          - AttributeName: personId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST   
+        
   Outputs:
     functionRoleArn:
       Description: Default role arn created

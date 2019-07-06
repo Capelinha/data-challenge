@@ -1,10 +1,9 @@
-import { APIGatewayProxyHandler } from "aws-lambda";
+import { SNSHandler } from "aws-lambda";
 import { By } from "selenium-webdriver";
 import { Driver } from "selenium-webdriver/chrome";
-import { buildResponseError, success } from "../../lib/amAPIGatewayProxyResult";
 import { buildDriver } from "../../lib/chromium";
 
-export const handler: APIGatewayProxyHandler = async (event) => {
+export const handler: SNSHandler = async (event) => {
 
   event
   const driver: Driver = buildDriver();
@@ -24,11 +23,10 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
     }
 
-    return success(data);
+    console.log(data);
 
   } catch (e) {
     console.log(e);
-    return buildResponseError(e);
   } finally {
     await driver.quit();
   }
