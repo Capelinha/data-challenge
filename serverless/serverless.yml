@@ -25,10 +25,10 @@ custom:
   stage: ${env:SLS_STAGE, opt:stage, self:provider.stage}
 
 functions:
-  getTweets:
-    handler: src/handlers/scrapers/scraperTweets.handler
+  scraperEscavador:
+    handler: src/handlers/scrapers/scraperEscavador.handler
     layers: 
-      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:48
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:51
     memorySize: 1156
     timeout: 20
     events:

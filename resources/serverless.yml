@@ -11,6 +11,7 @@ custom:
   stage: ${env:SLS_STAGE, opt:stage, self:provider.stage}
   table:
     people: ${self:custom.stage}.people
+    escavadorResult: ${self:custom.stage}.escavadorResult
 
 layers:
   ChromiumSelenium:
@@ -107,7 +108,29 @@ resources:
         KeySchema:
           - AttributeName: personId
             KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    escavadorResultTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:custom.table.escavadorResult}"
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: searchid
+            AttributeType: S
+          - AttributeName: personId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: searchid
+            KeyType: HASH
         BillingMode: PAY_PER_REQUEST   
+        GlobalSecondaryIndexes:
+          - IndexName: personId-index
+            KeySchema:
+              - AttributeName: personId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
         
   Outputs:
     functionRoleArn:
