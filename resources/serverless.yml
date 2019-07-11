@@ -12,6 +12,7 @@ custom:
   table:
     people: ${self:custom.stage}.people
     escavadorResult: ${self:custom.stage}.escavadorResult
+    consultaSocioResult: ${self:custom.stage}.consultaSocioResult
 
 layers:
   ChromiumSelenium:
@@ -113,6 +114,28 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: "${self:custom.table.escavadorResult}"
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: searchid
+            AttributeType: S
+          - AttributeName: personId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: searchid
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST   
+        GlobalSecondaryIndexes:
+          - IndexName: personId-index
+            KeySchema:
+              - AttributeName: personId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+    consultaSocioResultTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:custom.table.consultaSocioResult}"
         PointInTimeRecoverySpecification:
           PointInTimeRecoveryEnabled: true
         AttributeDefinitions:

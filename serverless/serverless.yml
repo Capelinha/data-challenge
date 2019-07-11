@@ -25,12 +25,28 @@ custom:
   stage: ${env:SLS_STAGE, opt:stage, self:provider.stage}
 
 functions:
-  scraperEscavador:
-    handler: src/handlers/scrapers/scraperEscavador.handler
+  # scraperEscavador:
+  #   handler: src/handlers/scrapers/scraperEscavador.handler
+  #   layers: 
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:53
+  #   memorySize: 1156
+  #   timeout: 30
+  #   events:
+  #     - sns: search
+  # scraperConsultaSocio:
+  #   handler: src/handlers/scrapers/scraperConsultaSocio.handler
+  #   layers: 
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:53
+  #   memorySize: 1156
+  #   timeout: 30
+  #   events:
+  #     - sns: search
+  scraperMaps:
+    handler: src/handlers/scrapers/scraperMaps.handler
     layers: 
-      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:51
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:53
     memorySize: 1156
-    timeout: 20
+    timeout: 30
     events:
       - sns: search
   createPerson:
