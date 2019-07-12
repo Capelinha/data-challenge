@@ -1,6 +1,7 @@
-import { EscavadorResult } from "../models/escavadorResult";
-import { AmDynamodbDataMapper } from "../repositories/dynamoDataMapper";
 import { ConsultaSocioResult } from "../models/consultaSocioResult";
+import { EscavadorResult } from "../models/escavadorResult";
+import { GoogleResult } from "../models/googleResult";
+import { AmDynamodbDataMapper } from "../repositories/dynamoDataMapper";
 
 /**
  * Class middleware that execute business rules for crawler service.
@@ -25,6 +26,14 @@ export class CrawlerService {
    */
   public async createConsultaSocioResult(consultaSocio: ConsultaSocioResult) {
     return this.dataMapper.put(consultaSocio);
+  }
+
+  /**
+   * Create a new google result
+   * @param result object that represent the google result
+   */
+  public async createGoogleResult(google: GoogleResult) {
+    return this.dataMapper.put(google);
   }
 
 }
