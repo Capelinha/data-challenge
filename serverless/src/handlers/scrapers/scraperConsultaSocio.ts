@@ -9,10 +9,10 @@ import { ConsultaSocioResult } from './../../models/consultaSocioResult';
 export const handler: SNSHandler = async (event: SNSEvent) => {
 
   for (const record of event.Records) {
-    const person: Person = Object.assign(new Person, JSON.parse(record.Sns.Message));
+    const personSearch: Person = Object.assign(new Person, JSON.parse(record.Sns.Message));
 
     const driver: Driver = buildDriver();
-    const name = `${person.firstName} ${person.lastName}`.replace(' ', ' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const name = `${personSearch.firstName} ${personSearch.lastName}`.replace(' ', ' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
     try {
       await driver.get('https://www.consultasocio.com/buscar/?keyword=' + name.replace(' ', '+'));
@@ -33,7 +33,8 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
         let response = {
           informations: [],
-          companies: []
+          companies: [],
+          personId: personSearch.personId
         }
 
         for (const ele of await driver.findElements(By.css('#details > div > div:nth-child(2) > div:nth-child(5) > p'))) {
@@ -81,7 +82,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
             }
           }
           response.companies.push(company);
-        } 1
+        };
 
         await new CrawlerService().createConsultaSocioResult(Object.assign(new ConsultaSocioResult, response));
       }

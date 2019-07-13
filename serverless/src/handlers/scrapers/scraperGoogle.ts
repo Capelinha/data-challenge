@@ -15,7 +15,6 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
     try {
       const name = `${person.firstName} ${person.lastName}`.replace(' ', ' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
       await driver.get('https://www.google.com/search?q="' + name + '"');
 
       const results = await driver.findElements(By.css('.rc'));
@@ -23,7 +22,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
       const response = [];
 
       for (const result of results) {
-        const title = await result.findElement(By.css('h3'));
+        const title = await result.findElement(By.css('h3')).getText();
         const description = await result.findElement(By.css('.st')).getText();
         const href = await result.findElement(By.css('a')).getAttribute('href');
         response.push({
@@ -32,6 +31,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
           href
         });
       }
+
 
       await new CrawlerService().createGoogleResult(Object.assign(new GoogleResult, { results: response }));
 
