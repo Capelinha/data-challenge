@@ -39,11 +39,11 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
       await sleep(2000);
 
       await driver.findElement(By.css('input[name="nomeusuario"]')).click();
-      await driver.findElement(By.css('input[name="nomeusuario"]')).sendKeys('usuario');
+      await driver.findElement(By.css('input[name="nomeusuario"]')).sendKeys('email');
 
 
       await driver.findElement(By.css('input[name="senhausuario"]')).click();
-      await driver.findElement(By.css('input[name="senhausuario"]')).sendKeys('semja');
+      await driver.findElement(By.css('input[name="senhausuario"]')).sendKeys('senha');
 
       await driver.findElement(By.css('.btn[type="submit"]')).click();
 

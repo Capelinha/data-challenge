@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-submit.component.css']
 })
 export class SearchSubmitComponent implements OnInit {
-
+  showForm = true;
   constructor() { }
 
   ngOnInit() {
   }
 
+  public toggleForm() {
+    this.showForm = !this.showForm;
+  }
 }

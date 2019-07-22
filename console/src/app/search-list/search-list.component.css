@@ -1,3 +1,34 @@
 .table {
     width: 100%;
 }
+
+mat-card-header {
+    cursor: pointer;
+}
+
+.badge-primary {
+    background-color: #3f51b5;
+    color: white;
+}
+
+.badge-error {
+    background-color: #dc3545;
+    color: white;
+}
+
+.badge-warn {
+    background-color: #ffc107;
+    color: white;
+}
+
+.badge-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.badge {
+    padding: 4px 7px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 12px;
+}
