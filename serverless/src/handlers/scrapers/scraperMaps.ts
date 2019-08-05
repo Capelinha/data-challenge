@@ -1,8 +1,12 @@
+import { CrawlerService } from './../../services/crawlerService';
 import { SNSEvent, SNSHandler } from "aws-lambda";
 import { By } from 'selenium-webdriver';
 import { Driver } from "selenium-webdriver/chrome";
 import { buildDriver } from "../../lib/chromium";
 import { Person } from "../../models/person";
+import { S3 } from "aws-sdk";
+import * as uuid from 'uuid';
+import { MapsResult } from '../../models/mapsResult';
 
 async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -26,7 +30,26 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
       await sbutton.click();
       
       await sleep(5000);
-      console.log(await driver.takeScreenshot());
+
+      const Key = `${uuid.v4()}.png`;
+      const Bucket = 'am-images-bucket-dev';
+
+      const Body = Buffer.from(await driver.takeScreenshot(), 'base64');
+
+      (new S3()).putObject({
+        Body,
+        Key,
+        Bucket,
+        ContentType: 'image/png'
+      }, (err, data) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log(data);
+        }
+      });
+
+      await new CrawlerService().createMapsResult(Object.assign(new MapsResult, {filename: Key, personId: person.personId, address: person.address}));
 
     } catch (e) {
       console.log(e);

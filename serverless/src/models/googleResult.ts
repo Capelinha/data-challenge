@@ -9,6 +9,10 @@ export class GoogleResult {
 
     @IsNotEmpty()
     @attribute()
+    public personId: string;
+
+    @IsNotEmpty()
+    @attribute()
     public results: object[];
 
     @attribute({

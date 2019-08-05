@@ -33,7 +33,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
       }
 
 
-      await new CrawlerService().createGoogleResult(Object.assign(new GoogleResult, { results: response }));
+      await new CrawlerService().createGoogleResult(Object.assign(new GoogleResult, { results: response, personId: person.personId }));
 
     } catch (e) {
       console.log(e);

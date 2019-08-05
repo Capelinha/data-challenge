@@ -1,3 +1,4 @@
+import { MapsResult } from './../models/mapsResult';
 import { JucespResult } from './../models/jucespResult';
 import { GoogleResult } from './../models/googleResult';
 import { EscavadorResult } from './../models/escavadorResult';
@@ -37,6 +38,9 @@ export class PersonService {
 
       const sivec = await this.dataMapper.query(SivecResult, {personId: person.personId}, {indexName: 'personId-index'});
       status['sivec'] = sivec.length > 0;
+
+      const maps = await this.dataMapper.query(MapsResult, {personId: person.personId}, {indexName: 'personId-index'});
+      status['maps'] = maps.length > 0;
 
       person['status'] = status;
       return person;

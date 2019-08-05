@@ -13,7 +13,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
     const driver: Driver = buildDriver();
     const name = `${person.firstName} ${person.lastName}`.replace(' ', ' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    
+
     try {
       await driver.get('https://www.escavador.com/busca?qo=en&q=' + name.replace(' ', '+'));
       
@@ -21,7 +21,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
       let find = [];
 
       for (const person of people) {
-        if (await person.getText() === name) {
+        if ((await person.getText()).normalize('NFD').replace(/[\u0300-\u036f]/g, '') === name) {
           find.push(person);
         }
       }

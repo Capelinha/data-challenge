@@ -1,3 +1,4 @@
+import { MapsResult } from './../models/mapsResult';
 import { ConsultaSocioResult } from "../models/consultaSocioResult";
 import { EscavadorResult } from "../models/escavadorResult";
 import { GoogleResult } from "../models/googleResult";
@@ -52,6 +53,14 @@ export class CrawlerService {
    */
   public async createSivecResult(sivec: SivecResult) {
     return this.dataMapper.put(sivec);
+  }
+
+  /**
+   * Create a new Maps result
+   * @param result object that represent the Maps result
+   */
+  public async createMapsResult(maps: MapsResult) {
+    return this.dataMapper.put(maps);
   }
 
 }

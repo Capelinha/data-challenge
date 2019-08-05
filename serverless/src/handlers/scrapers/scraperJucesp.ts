@@ -41,7 +41,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         response.push(data);      
       }
 
-      await new CrawlerService().createJucespResult(Object.assign(new JucespResult, { companies: response }));
+      await new CrawlerService().createJucespResult(Object.assign(new JucespResult, { companies: response, personId: person.personId }));
 
       for (const company of response) {
         await driver.get(`https://www.jucesponline.sp.gov.br/Restricted/GeraDocumento.aspx?nire=${company.nire}&tipoDocumento=1`);
