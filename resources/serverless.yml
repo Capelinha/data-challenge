@@ -18,6 +18,7 @@ custom:
     sivecResult: ${self:custom.stage}.sivecResult
     mapsResult: ${self:custom.stage}.mapsResult
     arpenspResult: ${self:custom.stage}.arpenspResult
+    sielResult: ${self:custom.stage}.sielResult
 
 layers:
   ChromiumSelenium:
@@ -251,6 +252,28 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: "${self:custom.table.arpenspResult}"
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: searchid
+            AttributeType: S
+          - AttributeName: personId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: searchid
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST   
+        GlobalSecondaryIndexes:
+          - IndexName: personId-index
+            KeySchema:
+              - AttributeName: personId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+    sielResultTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:custom.table.sielResult}"
         PointInTimeRecoverySpecification:
           PointInTimeRecoveryEnabled: true
         AttributeDefinitions:
