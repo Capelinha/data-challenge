@@ -29,7 +29,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
       console.log(await driver.takeScreenshot());
 
-      // await new CrawlerService().createSivecResult(Object.assign(new SivecResult, response));
+      // await new CrawlerService().createResult(Object.assign(new SivecResult, response));
     } catch (e) {
       console.log(e);
     } finally {

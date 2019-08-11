@@ -49,7 +49,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         }
       });
 
-      await new CrawlerService().createMapsResult(Object.assign(new MapsResult, {filename: Key, personId: person.personId, address: person.address}));
+      await new CrawlerService().createResult(Object.assign(new MapsResult, {filename: Key, personId: person.personId, address: person.address}));
 
     } catch (e) {
       console.log(e);

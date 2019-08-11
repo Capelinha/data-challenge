@@ -84,7 +84,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
           response.companies.push(company);
         };
 
-        await new CrawlerService().createConsultaSocioResult(Object.assign(new ConsultaSocioResult, response));
+        await new CrawlerService().createResult(Object.assign(new ConsultaSocioResult, response));
       }
 
     } catch (e) {

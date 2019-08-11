@@ -101,7 +101,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         personId: person.personId
       }
 
-      await new CrawlerService().createSivecResult(Object.assign(new SivecResult, response));
+      await new CrawlerService().createResult(Object.assign(new SivecResult, response));
     } catch (e) {
       console.log(e);
     } finally {

@@ -61,7 +61,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
           response.lawsuit.push(lawsuit);
         }
 
-        await new CrawlerService().createEscavadorResult(Object.assign(new EscavadorResult, response));
+        await new CrawlerService().createResult(Object.assign(new EscavadorResult, response));
       }
 
     } catch (e) {
