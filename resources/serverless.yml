@@ -19,6 +19,8 @@ custom:
     mapsResult: ${self:custom.stage}.mapsResult
     arpenspResult: ${self:custom.stage}.arpenspResult
     sielResult: ${self:custom.stage}.sielResult
+    censecResult: ${self:custom.stage}.censecResult
+    infocrimResult: ${self:custom.stage}.infocrimResult
 
 layers:
   ChromiumSelenium:
@@ -292,7 +294,51 @@ resources:
                 KeyType: HASH
             Projection:
               ProjectionType: ALL
-        
+    censecResultTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:custom.table.censecResult}"
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: searchid
+            AttributeType: S
+          - AttributeName: personId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: searchid
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST   
+        GlobalSecondaryIndexes:
+          - IndexName: personId-index
+            KeySchema:
+              - AttributeName: personId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+    infocrimResultTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:custom.table.infocrimResult}"
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: searchid
+            AttributeType: S
+          - AttributeName: personId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: searchid
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST   
+        GlobalSecondaryIndexes:
+          - IndexName: personId-index
+            KeySchema:
+              - AttributeName: personId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+
   Outputs:
     functionRoleArn:
       Description: Default role arn created

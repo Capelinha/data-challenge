@@ -81,10 +81,26 @@ functions:
   #   timeout: 30
   #   events:
   #     - sns: search
-  scraperSiel:
-    handler: src/handlers/scrapers/scraperSiel.handler
+  # scraperSiel:
+  #   handler: src/handlers/scrapers/scraperSiel.handler
+  #   layers: 
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:59
+  #   memorySize: 1156
+  #   timeout: 30
+  #   events:
+  #     - sns: search
+  # scraperCensec:
+  #   handler: src/handlers/scrapers/scraperCensec.handler
+  #   layers: 
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:60
+  #   memorySize: 1156
+  #   timeout: 30
+  #   events:
+  #     - sns: search
+  scraperInfocrim:
+    handler: src/handlers/scrapers/scraperInfocrim.handler
     layers: 
-      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:59
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:61
     memorySize: 1156
     timeout: 30
     events:
