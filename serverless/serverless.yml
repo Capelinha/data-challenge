@@ -105,10 +105,18 @@ functions:
   #   timeout: 30
   #   events:
   #     - sns: search
-  scraperInfoseg:
-    handler: src/handlers/scrapers/scraperInfoseg.handler
+  # scraperInfoseg:
+  #   handler: src/handlers/scrapers/scraperInfoseg.handler
+  #   layers: 
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:62
+  #   memorySize: 1156
+  #   timeout: 30
+  #   events:
+  #     - sns: search
+  scraperCadesp:
+    handler: src/handlers/scrapers/scraperCadesp.handler
     layers: 
-      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:62
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:63
     memorySize: 1156
     timeout: 30
     events:

@@ -22,6 +22,7 @@ custom:
     censecResult: ${self:custom.stage}.censecResult
     infocrimResult: ${self:custom.stage}.infocrimResult
     infosegResult: ${self:custom.stage}.infosegResult
+    cadespResult: ${self:custom.stage}.cadespResult
 
 layers:
   ChromiumSelenium:
@@ -343,6 +344,28 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: "${self:custom.table.infosegResult}"
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: searchid
+            AttributeType: S
+          - AttributeName: personId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: searchid
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST   
+        GlobalSecondaryIndexes:
+          - IndexName: personId-index
+            KeySchema:
+              - AttributeName: personId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+    cadespResultTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:custom.table.cadespResult}"
         PointInTimeRecoverySpecification:
           PointInTimeRecoveryEnabled: true
         AttributeDefinitions:

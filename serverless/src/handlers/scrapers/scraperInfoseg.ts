@@ -50,8 +50,6 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         response[camelize(title)] = type;
       }
 
-      console.log(response);
-
       new CrawlerService().createResult(Object.assign(new InfosegResult, response));
 
     } catch (e) {
