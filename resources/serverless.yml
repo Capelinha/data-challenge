@@ -23,6 +23,7 @@ custom:
     infocrimResult: ${self:custom.stage}.infocrimResult
     infosegResult: ${self:custom.stage}.infosegResult
     cadespResult: ${self:custom.stage}.cadespResult
+    arispResult: ${self:custom.stage}.arispResult
 
 layers:
   ChromiumSelenium:
@@ -366,6 +367,28 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: "${self:custom.table.cadespResult}"
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: searchid
+            AttributeType: S
+          - AttributeName: personId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: searchid
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST   
+        GlobalSecondaryIndexes:
+          - IndexName: personId-index
+            KeySchema:
+              - AttributeName: personId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+    arispResultTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:custom.table.arispResult}"
         PointInTimeRecoverySpecification:
           PointInTimeRecoveryEnabled: true
         AttributeDefinitions:
