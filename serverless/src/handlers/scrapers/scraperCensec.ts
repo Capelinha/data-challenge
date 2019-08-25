@@ -23,7 +23,6 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
       await driver.findElement(By.css('input[type=submit]')).click();
 
       await driver.get('http://ec2-18-231-116-58.sa-east-1.compute.amazonaws.com/censec/pagina3-pesquisa.html');
-      
 
       await driver.findElement(By.id('ctl00_ContentPlaceHolder1_DocumentoTextBox')).sendKeys(person.cnpj);
       await driver.findElement(By.id('ctl00_ContentPlaceHolder1_BuscarButton')).click();
