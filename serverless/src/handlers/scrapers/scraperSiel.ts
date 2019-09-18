@@ -13,6 +13,8 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
     const driver: Driver = buildDriver();
 
+    const crawlerService = new CrawlerService();
+
     person
     try {
       await driver.get('http://ec2-18-231-116-58.sa-east-1.compute.amazonaws.com/siel/login.html');
@@ -62,8 +64,10 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         validationCode: response.codValidacao,
       }
 
-      await new CrawlerService().createResult(Object.assign(new SielResult, response));
+      await crawlerService.updateStatus(person.personId, 'siel', 'finished');
+      await crawlerService.createResult(Object.assign(new SielResult, response));
     } catch (e) {
+      await crawlerService.updateStatus(person.personId, 'siel', 'error');
       console.log(e);
     } finally {
       await driver.quit();

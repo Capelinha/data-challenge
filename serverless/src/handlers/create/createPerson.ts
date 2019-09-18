@@ -15,12 +15,13 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
       throw new ResponseError(400, errors[0].toString());
     }
 
+    const personSaved = await new PersonService().createPerson(person);
     await new SNS().publish({
-      Message: JSON.stringify(person),
+      Message: JSON.stringify(personSaved),
       TopicArn: `arn:aws:sns:us-east-1:${process.env.AWS_ACCOUNT}:search`
     }).promise();
 
-    return success(await new PersonService().createPerson(person));
+    return success(personSaved);
   } catch (e) {
     console.log(e);
     return buildResponseError(e);

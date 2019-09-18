@@ -13,6 +13,8 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
     const driver: Driver = buildDriver();
 
+    const crawlerService = new CrawlerService();
+
     person
     try {
       await driver.get('http://ec2-18-231-116-58.sa-east-1.compute.amazonaws.com/arpensp/pagina3-busca.html');
@@ -63,8 +65,10 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         weddingDate: response.dataDoCasamento,
       }
 
-      await new CrawlerService().createResult(Object.assign(new ArpenspResult, response));
+      await crawlerService.updateStatus(person.personId, 'arpensp', 'finished');
+      await crawlerService.createResult(Object.assign(new ArpenspResult, response));
     } catch (e) {
+      await crawlerService.updateStatus(person.personId, 'arpensp', 'error');
       console.log(e);
     } finally {
       await driver.quit();

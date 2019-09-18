@@ -121,22 +121,22 @@ functions:
   #   timeout: 30
   #   events:
   #     - sns: search
-  # scraperArisp:
-  #   handler: src/handlers/scrapers/scraperArisp.handler
-  #   layers: 
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
-  #   memorySize: 1156
-  #   timeout: 30
-  #   events:
-  #     - sns: search
-  scraperCaged:
-    handler: src/handlers/scrapers/scraperCaged.handler
+  scraperArisp:
+    handler: src/handlers/scrapers/scraperArisp.handler
     layers: 
       - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
     memorySize: 1156
     timeout: 30
     events:
       - sns: search
+  # scraperCaged:
+  #   handler: src/handlers/scrapers/scraperCaged.handler
+  #   layers: 
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
+  #   memorySize: 1156
+  #   timeout: 30
+  #   events:
+  #     - sns: search
   # scraperFacebook:
   #   handler: src/handlers/scrapers/scraperFacebook.handler
   #   layers: 

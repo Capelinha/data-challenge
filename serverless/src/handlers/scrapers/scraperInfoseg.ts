@@ -13,6 +13,8 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
     const driver: Driver = buildDriver();
 
+    const crawlerService = new CrawlerService();
+
     try {
       await driver.get('http://ec2-18-231-116-58.sa-east-1.compute.amazonaws.com/infoseg/login.html');
       await driver.findElement(By.id('formLogin:identificacao')).click();
@@ -50,9 +52,11 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         response[camelize(title)] = type;
       }
 
-      new CrawlerService().createResult(Object.assign(new InfosegResult, response));
+      await crawlerService.updateStatus(person.personId, 'infoseg', 'finished');
+      await crawlerService.createResult(Object.assign(new InfosegResult, response));
 
     } catch (e) {
+      await crawlerService.updateStatus(person.personId, 'infoseg', 'error');
       console.log(e);
     } finally {
       await driver.quit();

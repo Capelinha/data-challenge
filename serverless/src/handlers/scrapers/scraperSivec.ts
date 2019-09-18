@@ -17,6 +17,8 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
     const driver: Driver = buildDriver();
 
+    const crawlerService = new CrawlerService();
+
     try {
       await driver.get(`https://vec-mpspbr.msappproxy.net/vec/logon.do`);
 
@@ -102,8 +104,10 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         personId: person.personId
       }
 
-      await new CrawlerService().createResult(Object.assign(new SivecResult, response));
+      await crawlerService.updateStatus(person.personId, 'sivec', 'finished');
+      await crawlerService.createResult(Object.assign(new SivecResult, response));
     } catch (e) {
+      await crawlerService.updateStatus(person.personId, 'sivec', 'error');
       console.log(e);
     } finally {
       await driver.quit();

@@ -13,6 +13,8 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
     const driver: Driver = buildDriver();
 
+    const crawlerService = new CrawlerService();
+
     try {
       await driver.get('http://ec2-18-231-116-58.sa-east-1.compute.amazonaws.com/infocrim/login.html');
       await driver.findElement(By.css('input[name=cd_usuario]')).click();
@@ -53,8 +55,10 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         results.push(report);
       }
 
-      await new CrawlerService().createResult(Object.assign(new InfocrimResult, {results, personId: person.personId}))
+      await crawlerService.updateStatus(person.personId, 'infocrim', 'finished');
+      await crawlerService.createResult(Object.assign(new InfocrimResult, {results, personId: person.personId}))
     } catch (e) {
+      await crawlerService.updateStatus(person.personId, 'infocrim', 'error');
       console.log(e);
     } finally {
       await driver.quit();
