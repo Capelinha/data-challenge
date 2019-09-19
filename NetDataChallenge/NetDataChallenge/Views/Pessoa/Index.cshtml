@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Console</title>
+
+</head>
+<body>
+    <br>
+    <div class="container-fluid">
+        
+            <div class="card">
+                <h3 class="card-header">Pesquisar Pessoa</h3>
+                <div class="card-body">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="Nome">Nome:</label> <input type="text" name="Nome"
+                                                                       id="Nome" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="Sobrenome">Sobrenome:</label> <input type="text"
+                                                                                 name="Sobrenome" id="Sobrenome" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="rg">RG:</label> <input type="text" name="rg" id="rg"
+                                                                   class="form-control" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="cpf">CPF:</label> <input type="text" name="cpf"
+                                                                     id="cpf" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="cnpj">CNPJ:</label> <input type="text" name="cnpj"
+                                                                       id="cnpj" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="portais">Portais:</label>
+                            <select class="selectpicker col-md-11" name="portais" multiple data-live-search="true"
+                                    id="portais" class="form-control">
+                                <option itemValue="1" itemLabel="Facebook">Facebook</option>
+                                <option itemValue="2" itemLabel="Sivec">Sivec</option>
+                                <option itemValue="3" itemLabel="Google Maps">Google Maps</option>
+                                <option itemValue="4" itemLabel="Jucesp">Jucesp</option>
+                                <option itemValue="5" itemLabel="Linkedin">Linkedin</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                        <button class="btn btn-light">Limpar</button>
+                    </form>
+                </div>
+            </div>
+        
+</div>
+<br>
+<div class="container-fluid">
+    
+        <div class="card">
+            <h3 class="card-header">Pesquisas Recentes</h3>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tr>
+                        <th>No.</th>
+                        <th>Nome</th>
+                        <th>Progresso</th>
+                        <th>Acertabilidade</th>
+                        <th>Status</th>
+                        <th>Opções</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mateus de Oliveira Igreja</td>
+                        <td>100%</td>
+                        <td>20%</td>
+                        <td><span class="badge badge-success badge-pill">Finalizado</span></td>
+                        <td>
+                            Opções...
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Caio Laurenti Bianchini</td>
+                        <td>100%</td>
+                        <td>100%</td>
+                        <td><span class="badge badge-success badge-pill">Finalizado</span></td>
+                        <td>Opções...</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Gabriel Lourenço</td>
+                        <td>55%</td>
+                        <td>-</td>
+                        <td><span class="badge badge-warning badge-pill">Em andamento...</span></td>
+                        <td>Opções...</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+</div>
+</body>
+</html>
+
+
