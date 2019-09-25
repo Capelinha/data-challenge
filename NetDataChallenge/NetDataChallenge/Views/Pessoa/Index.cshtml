@@ -1,4 +1,6 @@
-﻿@{
+﻿@model PessoaModel
+
+@{
     ViewData["Title"] = "Index";
 }
 
@@ -12,56 +14,56 @@
 <body>
     <br>
     <div class="container-fluid">
-        
-            <div class="card">
-                <h3 class="card-header">Pesquisar Pessoa</h3>
-                <div class="card-body">
-                    <form>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="Nome">Nome:</label> <input type="text" name="Nome"
-                                                                       id="Nome" class="form-control" />
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="Sobrenome">Sobrenome:</label> <input type="text"
-                                                                                 name="Sobrenome" id="Sobrenome" class="form-control" />
-                            </div>
+
+        <div class="card">
+            <h3 class="card-header">Pesquisar Pessoa</h3>
+            <div class="card-body">
+                <form asp-action="Search" asp-controller="Pessoa" asp-route-id="" method="post">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="FirstName"></label>
+                            <input asp-for="FirstName" class="form-control" />
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="rg">RG:</label> <input type="text" name="rg" id="rg"
-                                                                   class="form-control" />
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="cpf">CPF:</label> <input type="text" name="cpf"
-                                                                     id="cpf" class="form-control" />
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="cnpj">CNPJ:</label> <input type="text" name="cnpj"
-                                                                       id="cnpj" class="form-control" />
-                            </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="LastName"></label>
+                            <input asp-for="LastName" class="form-control" />
                         </div>
-                        <div class="form-group">
-                            <label for="portais">Portais:</label>
-                            <select class="selectpicker col-md-11" name="portais" multiple data-live-search="true"
-                                    id="portais" class="form-control">
-                                <option itemValue="1" itemLabel="Facebook">Facebook</option>
-                                <option itemValue="2" itemLabel="Sivec">Sivec</option>
-                                <option itemValue="3" itemLabel="Google Maps">Google Maps</option>
-                                <option itemValue="4" itemLabel="Jucesp">Jucesp</option>
-                                <option itemValue="5" itemLabel="Linkedin">Linkedin</option>
-                            </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label asp-for="Rg"></label>
+                            <input asp-for="Rg" class="form-control" />
                         </div>
-                        <button type="submit" class="btn btn-primary">Adicionar</button>
-                        <button class="btn btn-light">Limpar</button>
-                    </form>
-                </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Cpf"></label>
+                            <input asp-for="Cpf" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Cnpj"></label>
+                            <input asp-for="Cnpj" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SearchPage"></label>
+                        <select class="selectpicker col-md-11 form-control" multiple data-live-search="true"
+                                asp-for="SearchPage">
+                            <option itemValue="A1" itemLabel="Facebook">Facebook</option>
+                            <option itemValue="A2" itemLabel="Sivec">Sivec</option>
+                            <option itemValue="C1" itemLabel="Google Maps">Google Maps</option>
+                            <option itemValue="C2" itemLabel="Jucesp">Jucesp</option>
+                            <option itemValue="C3" itemLabel="Linkedin">Linkedin</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                    <button class="btn btn-light">Limpar</button>
+                </form>
             </div>
-        
-</div>
-<br>
-<div class="container-fluid">
-    
+        </div>
+
+    </div>
+    <br>
+    <div class="container-fluid">
+
         <div class="card">
             <h3 class="card-header">Pesquisas Recentes</h3>
             <div class="card-body">
@@ -74,7 +76,7 @@
                         <th>Status</th>
                         <th>Opções</th>
                     </tr>
-                    <tr>
+                    <!--<tr>
                         <td>1</td>
                         <td>Mateus de Oliveira Igreja</td>
                         <td>100%</td>
@@ -99,12 +101,23 @@
                         <td>-</td>
                         <td><span class="badge badge-warning badge-pill">Em andamento...</span></td>
                         <td>Opções...</td>
-                    </tr>
+                    </tr>-->
+                    @foreach (PessoaModel pessoa in ViewBag.Pessoas)
+                    {
+                        <tr>
+                            <td>1</td>
+                            <td>@pessoa.FirstName @pessoa.LastName</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td><span class="badge badge-warning badge-pill">Em andamento...</span></td>
+                            <td>Opções...</td>
+                        </tr>
+                    }
                 </table>
             </div>
         </div>
 
-</div>
+    </div>
 </body>
 </html>
 
