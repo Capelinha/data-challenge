@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandler, APIGatewayProxyEvent } from "aws-lambda";
 import { SNS } from "aws-sdk";
 import { validate, ValidationError } from "class-validator";
-import { buildResponseError, ResponseError, success } from "../../lib/amAPIGatewayProxyResult";
+import { buildResponseError, ResponseError, created } from "../../lib/amAPIGatewayProxyResult";
 import { Person } from "../../models/person";
 import { PersonService } from "../../services/personService";
 
@@ -21,7 +21,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
       TopicArn: `arn:aws:sns:us-east-1:${process.env.AWS_ACCOUNT}:search`
     }).promise();
 
-    return success(personSaved);
+    return created(personSaved);
   } catch (e) {
     console.log(e);
     return buildResponseError(e);
