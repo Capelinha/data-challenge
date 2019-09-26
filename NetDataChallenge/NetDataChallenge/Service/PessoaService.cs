@@ -42,7 +42,7 @@ namespace NetDataChallenge.Service
                        new StatusModel()
                        {
                            Portal = "Escavador",
-                           Status = "finished"
+                           Status = "error"
                        },
                        new StatusModel()
                        {
