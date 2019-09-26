@@ -18,20 +18,88 @@ namespace NetDataChallenge.Controllers
             pessoaService = new PessoaService();
         }
 
+        //Função para gerar os itens da lista
+        public IList<ListItemModel> makeList()
+        {
+            var pessoas = pessoaService.FindAll();
+            IList<ListItemModel> listItems = new List<ListItemModel>();
+            //cálculo das porcentagens dos items
+            foreach (var pessoa in pessoas)
+            {
+                double correct = 0;
+                double progress = 0;
+                double tot = 0;
+                var item = new ListItemModel();
+                item.Name = pessoa.FirstName +" " + pessoa.LastName;
+                item.Status = true;
+                foreach (var stats in pessoa.ListaStatus)
+                {
+                    tot++;
+                    if (stats.Status.Equals("starting"))
+                    {
+                        item.Status = false;
+                    }
+                    else if (stats.Status.Equals("finished"))
+                    {
+                        progress++;
+                        correct++;
+                    }
+                    else if (stats.Status.Equals("error"))
+                    {
+                        progress++;
+                    }
+                }
+                item.Progress = Math.Round((progress / tot) * 100);
+                item.Correct = Math.Round((correct / tot) * 100);
+                listItems.Add(item);
+            }
+            return listItems;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.Pessoas = pessoaService.FindAll();
-            return View(new PessoaModel() {
-                    UidCreated = "sfdgsfjksadlghkalhsdkgadçkAKJHDASDKF"
-                });
+            ViewBag.Pessoas = makeList();
+            return View(new PessoaModel()
+            {
+                UidCreated = "sfdgsfjksadlghkalhsdkgadçkAKJHDASDKF"
+            });
         }
 
         [HttpPost]
-        public IActionResult Search(PessoaModel pessoa)
+        public IActionResult AddSearch(PessoaModel pessoa)
         {
-            ViewBag.Pessoas = pessoaService.FindAll();
+            pessoa.ListaStatus = new List<StatusModel>(){
+                new StatusModel()
+                {
+                    Portal = "Consulta Socio",
+                    Status = "error"
+                },
+                new StatusModel()
+                {
+                    Portal = "Escavador",
+                    Status = "error"
+                },
+                new StatusModel()
+                {
+                    Portal = "Google",
+                    Status = "error"
+                }
+            };
+            string search = "";
+            foreach(var portal in pessoa.Portals)
+            {
+                if (portal.Equals("Facebook"))
+                {
+                    search = search + "F1";
+                } else if (portal.Equals("Linkedin"))
+                {
+                    search = search + "L1";
+                }
+            }
+            pessoa.SearchPage = search;
             pessoaService.Insert(pessoa);
+            ViewBag.Pessoas = makeList();
             return RedirectToAction("Index", "Pessoa");
         }
     }
