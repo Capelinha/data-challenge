@@ -37,6 +37,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
       const Body = Buffer.from(await driver.takeScreenshot(), 'base64');
 
       (new S3()).putObject({
+        ACL: 'public-read',
         Body,
         Key,
         Bucket,

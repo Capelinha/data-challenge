@@ -37,6 +37,11 @@ export class Person {
     @attribute()
     public companyName: string;
 
+    @IsOptional()
+    @IsNotEmpty()
+    @attribute()
+    public reportUrl: string;
+
     @IsNotEmpty()
     @attribute()
     public searchPages: string;

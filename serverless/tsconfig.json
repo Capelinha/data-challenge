@@ -7,7 +7,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "experimentalDecorators": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "target": "es2017",
     "outDir": "lib"
   },
