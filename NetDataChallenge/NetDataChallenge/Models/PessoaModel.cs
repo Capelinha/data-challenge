@@ -24,6 +24,7 @@ namespace NetDataChallenge.Models
         public string Cnpj { get; set; }
 
         [Display(Name = "Portais:")]
+        public IList<string> Portals { get; set; }
         public string SearchPage { get; set; }
         public string UidCreated { get; set; }
 
