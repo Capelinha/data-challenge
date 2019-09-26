@@ -6,7 +6,8 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   event;
   try {
     const personId = event.pathParameters.personId;
-    return success(await new PersonService().generateReport(personId));
+
+    return success(await new PersonService().getPersonById(personId));
   } catch (e) {
     console.log(e);
     return buildResponseError(e);

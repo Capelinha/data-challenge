@@ -13,6 +13,8 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
     const driver: Driver = buildDriver();
 
+    const crawlerService = new CrawlerService();
+
     try {
 
       const baseUrl = 'https://www.jucesponline.sp.gov.br/GeoJson.aspx';
@@ -41,13 +43,15 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         response.push(data);      
       }
 
-      await new CrawlerService().createResult(Object.assign(new JucespResult, { companies: response, personId: person.personId }));
+      await crawlerService.updateStatus(person.personId, 'jucesp', 'finished');
+      await crawlerService.createResult(Object.assign(new JucespResult, { companies: response, personId: person.personId }));
 
       for (const company of response) {
         await driver.get(`https://www.jucesponline.sp.gov.br/Restricted/GeraDocumento.aspx?nire=${company.nire}&tipoDocumento=1`);
       }
       
     } catch (e) {
+      await crawlerService.updateStatus(person.personId, 'jucesp', 'error');
       console.log(e);
     } finally {
       await driver.quit();

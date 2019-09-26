@@ -6,10 +6,6 @@ import { Person } from "../../models/person";
 import { SivecResult } from "../../models/sivecResult";
 import { CrawlerService } from './../../services/crawlerService';
 
-async function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 export const handler: SNSHandler = async (event: SNSEvent) => {
 
   for (const record of event.Records) {
@@ -17,27 +13,10 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
     const driver: Driver = buildDriver();
 
+    const crawlerService = new CrawlerService();
+
     try {
-      await driver.get(`https://vec-mpspbr.msappproxy.net/vec/logon.do`);
-
-      await sleep(2000);
-
-      await driver.findElement(By.css('input[name="loginfmt"]')).click(); 
-      await driver.findElement(By.css('.btn[type="submit"]')).click();
-      await driver.findElement(By.css('input[name="loginfmt"]')).sendKeys('email');
-      await driver.findElement(By.css('.btn[type="submit"]')).click();
-
-      await sleep(2000);
-
-      await driver.findElement(By.css('input[name="passwd"]')).click();
-      await driver.findElement(By.css('input[name="passwd"]')).sendKeys('senha');
-      await driver.findElement(By.css('.btn[type="submit"]')).click();
-
-      await sleep(2000);
-
-      await driver.findElement(By.css('.btn[type="submit"]')).click();
-
-      await sleep(2000);
+      await driver.get(`http://ec2-18-231-116-58.sa-east-1.compute.amazonaws.com/sivec/login.html`);
 
       await driver.findElement(By.css('input[name="nomeusuario"]')).click();
       await driver.findElement(By.css('input[name="nomeusuario"]')).sendKeys('email');
@@ -48,14 +27,14 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
       await driver.findElement(By.css('.btn[type="submit"]')).click();
 
-      await driver.get('https://vec-mpspbr.msappproxy.net/vec/pfisica_rg.view');
-
-      await sleep(2000);
+      await driver.get('http://ec2-18-231-116-58.sa-east-1.compute.amazonaws.com/sivec/pagina3-pesquisa-rg.html');
 
       await driver.findElement(By.css('#idValorPesq')).click();
       await driver.findElement(By.css('#idValorPesq')).sendKeys(person.rg);
 
       await driver.findElement(By.css('#procurar')).click();
+
+      await driver.findElement(By.css('.textotab1 a')).click();
 
       const data = await driver.findElements(By.css('.container.top-buffer15 .textotab2, .textotab'));
       let invert = true;
@@ -102,8 +81,10 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         personId: person.personId
       }
 
-      await new CrawlerService().createResult(Object.assign(new SivecResult, response));
+      await crawlerService.updateStatus(person.personId, 'sivec', 'finished');
+      await crawlerService.createResult(Object.assign(new SivecResult, response));
     } catch (e) {
+      await crawlerService.updateStatus(person.personId, 'sivec', 'error');
       console.log(e);
     } finally {
       await driver.quit();

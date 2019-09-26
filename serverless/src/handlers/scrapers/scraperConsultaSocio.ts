@@ -10,6 +10,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
   for (const record of event.Records) {
     const personSearch: Person = Object.assign(new Person, JSON.parse(record.Sns.Message));
+    const crawlerService = new CrawlerService();
 
     const driver: Driver = buildDriver();
     const name = `${personSearch.firstName} ${personSearch.lastName}`.replace(' ', ' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -83,11 +84,12 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
           }
           response.companies.push(company);
         };
-
-        await new CrawlerService().createResult(Object.assign(new ConsultaSocioResult, response));
+        await crawlerService.updateStatus(person.personId, 'consultaSocio', 'finished');
+        await crawlerService.createResult(Object.assign(new ConsultaSocioResult, response));
       }
 
     } catch (e) {
+      await crawlerService.updateStatus(personSearch.personId, 'consultaSocio', 'error');
       console.log(e);
     } finally {
       await driver.quit();

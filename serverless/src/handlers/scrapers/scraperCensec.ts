@@ -13,6 +13,8 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
     const driver: Driver = buildDriver();
 
+    const crawlerService = new CrawlerService();
+
     person
     try {
       await driver.get('http://ec2-18-231-116-58.sa-east-1.compute.amazonaws.com/censec/login.html');
@@ -70,8 +72,10 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         await driver.navigate().back();
       }
 
-      await new CrawlerService().createResult(Object.assign(new CensecResult, response));
+      await crawlerService.updateStatus(person.personId, 'censec', 'finished');
+      await crawlerService.createResult(Object.assign(new CensecResult, response));
     } catch (e) {
+      await crawlerService.updateStatus(person.personId, 'censec', 'error');
       console.log(e);
     } finally {
       await driver.quit();

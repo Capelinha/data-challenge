@@ -10,6 +10,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
   for (const record of event.Records) {
     const person: Person = Object.assign(new Person, JSON.parse(record.Sns.Message));
+    const crawlerService = new CrawlerService();
 
     const driver: Driver = buildDriver();
     const name = `${person.firstName} ${person.lastName}`.replace(' ', ' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -61,10 +62,12 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
           response.lawsuit.push(lawsuit);
         }
 
-        await new CrawlerService().createResult(Object.assign(new EscavadorResult, response));
+        await crawlerService.updateStatus(person.personId, 'escavador', 'finished');
+        await crawlerService.createResult(Object.assign(new EscavadorResult, response));
       }
 
     } catch (e) {
+      await crawlerService.updateStatus(person.personId, 'escavador', 'error');
       console.log(e);
     } finally {
       await driver.quit();

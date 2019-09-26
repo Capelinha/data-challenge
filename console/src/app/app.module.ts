@@ -17,6 +17,7 @@ import { SearchListComponent } from './search-list/search-list.component';
 import { PersonService } from './search-list/services/person.service';
 import { SearchSubmitComponent } from './search-submit/search-submit.component';
 import { MatIconModule } from '@angular/material/icon';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -32,9 +33,11 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatInputModule,
     CommonModule,
+    ReactiveFormsModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
+    FlexLayoutModule,
     MatCardModule,
     MatTableModule,
     MatDividerModule,

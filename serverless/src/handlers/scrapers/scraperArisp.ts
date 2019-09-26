@@ -13,8 +13,9 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
   for (const record of event.Records) {
     const person: Person = Object.assign(new Person, JSON.parse(record.Sns.Message));
-
     const driver: Driver = buildDriver();
+
+    const crawlerService = new CrawlerService();
 
     try {
       await driver.get('http://ec2-18-231-116-58.sa-east-1.compute.amazonaws.com/arisp/login.html');
@@ -85,10 +86,10 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         await driver.switchTo().window((await driver.getAllWindowHandles())[0]);
       }
 
-      console.log(JSON.stringify(result));
-      await new CrawlerService().createResult(Object.assign(new ArispResult, result));
-      
+      await crawlerService.updateStatus(person.personId, 'arisp', 'finished');
+      await crawlerService.createResult(Object.assign(new ArispResult, result));
     } catch (e) {
+      await crawlerService.updateStatus(person.personId, 'arisp', 'error');
       console.log(e);
     } finally {
       await driver.quit();

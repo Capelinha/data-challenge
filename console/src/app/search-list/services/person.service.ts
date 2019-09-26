@@ -8,27 +8,22 @@ export interface IPerson {
   personId: string;
   firstName: string;
   lastName: string;
-  email: string;
-  address: string;
   uidCreated: number;
   rg: string;
   cpf: string;
   cnpj: string;
   searchPages: string;
-  phoneNumber: string;
   createdAt: number;
-  status: {
-      consultaSocio: boolean;
-      escavador: boolean;
-      google: boolean;
-      jucesp: boolean;
-      sivec: boolean
-  };
+  status: any;
 }
 
 @Injectable()
 export class PersonService {
   constructor(private http: HttpClient) {}
+
+  addPeople(person: IPerson): Observable<IPerson[]> {
+    return this.http.post<IPerson[]>(`${endpoint}/person`, person);
+  }
 
   getPeople(): Observable<IPerson[]> {
     return this.http.get<IPerson[]>(`${endpoint}/person`);

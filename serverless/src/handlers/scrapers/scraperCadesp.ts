@@ -13,6 +13,8 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
     const driver: Driver = buildDriver();
 
+    const crawlerService = new CrawlerService();
+
     try {
       await driver.get('http://ec2-18-231-116-58.sa-east-1.compute.amazonaws.com/cadesp/login.html');
       await driver.findElement(By.id('ctl00_conteudoPaginaPlaceHolder_loginControl_UserName')).click();
@@ -46,9 +48,11 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         personId: person.personId
       };
 
-      new CrawlerService().createResult(Object.assign(new CadespResult, response));
+      await crawlerService.updateStatus(person.personId, 'cadesp', 'finished');
+      await crawlerService.createResult(Object.assign(new CadespResult, response));
 
     } catch (e) {
+      await crawlerService.updateStatus(person.personId, 'cadesp', 'error');
       console.log(e);
     } finally {
       await driver.quit();

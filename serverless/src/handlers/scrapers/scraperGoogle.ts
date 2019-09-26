@@ -13,6 +13,8 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
     const driver: Driver = buildDriver();
 
+    const crawlerService = new CrawlerService();
+
     try {
       const name = `${person.firstName} ${person.lastName}`.replace(' ', ' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       await driver.get('https://www.google.com/search?q="' + name + '"');
@@ -32,10 +34,11 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         });
       }
 
-
-      await new CrawlerService().createResult(Object.assign(new GoogleResult, { results: response, personId: person.personId }));
+      await crawlerService.updateStatus(person.personId, 'google', 'finished');
+      await crawlerService.createResult(Object.assign(new GoogleResult, { results: response, personId: person.personId }));
 
     } catch (e) {
+      await crawlerService.updateStatus(person.personId, 'google', 'error');
       console.log(e);
     } finally {
       await driver.quit();

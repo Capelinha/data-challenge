@@ -3,10 +3,10 @@ import { SNSEvent, SNSHandler } from "aws-lambda";
 import { By } from 'selenium-webdriver';
 import { Driver } from "selenium-webdriver/chrome";
 import { buildDriver } from "../../lib/chromium";
-import { Person } from "../../models/person";
 import { S3 } from "aws-sdk";
 import * as uuid from 'uuid';
 import { MapsResult } from '../../models/mapsResult';
+import { Person } from '../../models/person';
 
 async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -15,12 +15,12 @@ async function sleep(ms) {
 export const handler: SNSHandler = async (event: SNSEvent) => {
 
   for (const record of event.Records) {
-    const person: Person = Object.assign(new Person, JSON.parse(record.Sns.Message));
-
+    const address: string = JSON.parse(record.Sns.Message).address;
+    const person: Person = Object.assign(new Person, JSON.parse(record.Sns.Message).person);
     const driver: Driver = buildDriver();
 
     try {
-      await driver.get('https://www.google.com/maps/place/' + person.address.replace(' ', '+'));
+      await driver.get('https://www.google.com/maps/place/' + address);
 
       await sleep(5000);
       const fbutton = await driver.findElement(By.css('#pane > div > div.widget-pane-content.scrollable-y > div > div > div.section-hero-header-image > button'));
@@ -37,6 +37,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
       const Body = Buffer.from(await driver.takeScreenshot(), 'base64');
 
       (new S3()).putObject({
+        ACL: 'public-read',
         Body,
         Key,
         Bucket,
@@ -49,7 +50,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         }
       });
 
-      await new CrawlerService().createResult(Object.assign(new MapsResult, {filename: Key, personId: person.personId, address: person.address}));
+      await new CrawlerService().createResult(Object.assign(new MapsResult, {filename: Key, personId: person.personId, address}));
 
     } catch (e) {
       console.log(e);
