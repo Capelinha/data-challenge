@@ -18,7 +18,7 @@
         <div class="card">
             <h3 class="card-header">Pesquisar Pessoa</h3>
             <div class="card-body">
-                <form asp-action="Search" asp-controller="Pessoa" asp-route-id="" method="post">
+                <form asp-action="AddSearch" asp-controller="Pessoa" asp-route-id="" method="post">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label asp-for="FirstName"></label>
@@ -46,7 +46,7 @@
                     <div class="form-group">
                         <label asp-for="SearchPage"></label>
                         <select class="selectpicker col-md-11 form-control" multiple data-live-search="true"
-                                asp-for="SearchPage">
+                                asp-for="Portals">
                             <option itemValue="A1" itemLabel="Facebook">Facebook</option>
                             <option itemValue="A2" itemLabel="Sivec">Sivec</option>
                             <option itemValue="C1" itemLabel="Google Maps">Google Maps</option>
@@ -76,47 +76,28 @@
                         <th>Status</th>
                         <th>Opções</th>
                     </tr>
-                    <!--<tr>
-                        <td>1</td>
-                        <td>Mateus de Oliveira Igreja</td>
-                        <td>100%</td>
-                        <td>20%</td>
-                        <td><span class="badge badge-success badge-pill">Finalizado</span></td>
-                        <td>
-                            Opções...
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Caio Laurenti Bianchini</td>
-                        <td>100%</td>
-                        <td>100%</td>
-                        <td><span class="badge badge-success badge-pill">Finalizado</span></td>
-                        <td>Opções...</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Gabriel Lourenço</td>
-                        <td>55%</td>
-                        <td>-</td>
-                        <td><span class="badge badge-warning badge-pill">Em andamento...</span></td>
-                        <td>Opções...</td>
-                    </tr>-->
-                    @foreach (PessoaModel pessoa in ViewBag.Pessoas)
+                    @foreach (ListItemModel pessoa in ViewBag.Pessoas)
                     {
                         <tr>
                             <td>1</td>
-                            <td>@pessoa.FirstName @pessoa.LastName</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td><span class="badge badge-warning badge-pill">Em andamento...</span></td>
+                            <td>@pessoa.Name</td>
+                            <td>@pessoa.Progress %</td>
+                            <td>@pessoa.Correct %</td>
+                            <td>
+                                @if (pessoa.Status)
+                                {
+                                    <span class="badge badge-success badge-pill">Finalizado</span>
+                                }
+                                else {
+                                    <span class="badge badge-warning badge-pill">Em andamento...</span>
+                                }
+                            </td>
                             <td>Opções...</td>
                         </tr>
                     }
                 </table>
             </div>
         </div>
-
     </div>
 </body>
 </html>
