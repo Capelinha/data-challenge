@@ -92,13 +92,33 @@
                                     <span class="badge badge-warning badge-pill">Em andamento...</span>
                                 }
                             </td>
-                            <td>Opções...</td>
+                            <td>
+                                <a class="btn btn-info" asp-controller="Pessoa" asp-action="Relatorio">Relatório</a>
+                                <button class="btn btn-info detail" data-id="@pessoa.Id">Detalhes</button>
+                                <a class="btn btn-info" asp-controller="Pessoa" asp-action="Editar" asp-data-id="@pessoa.Id">Editar</a>
+                                <a class="btn btn-info" asp-controller="Pessoa" asp-action="Exluir">Excluir</a>
+                            </td>
                         </tr>
                     }
                 </table>
             </div>
         </div>
     </div>
+    <div class="modal" id="modal">
+
+    </div>
+    @section scripts{ 
+        <script>
+            $(function () {
+                $(".detail").click(function () {
+                    var id = $(this).attr("data-id");
+                    $("#modal").load("/Pessoa/Detalhes?id=" + id, function () {
+                        $("#modal").modal('show');
+                    })
+                });
+            })
+        </script>
+    }
 </body>
 </html>
 
