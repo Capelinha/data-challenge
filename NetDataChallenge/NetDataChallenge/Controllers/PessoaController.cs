@@ -51,6 +51,7 @@ namespace NetDataChallenge.Controllers
                 }
                 item.Progress = Math.Round((progress / tot) * 100);
                 item.Correct = Math.Round((correct / tot) * 100);
+                item.Id = "1";
                 listItems.Add(item);
             }
             return listItems;
@@ -101,6 +102,12 @@ namespace NetDataChallenge.Controllers
             pessoaService.Insert(pessoa);
             ViewBag.Pessoas = makeList();
             return RedirectToAction("Index", "Pessoa");
+        }
+
+        public IActionResult Detalhes(string id)
+        {
+            PessoaModel pessoa = pessoaService.FindById(id);
+            return View(pessoa);
         }
     }
 }
