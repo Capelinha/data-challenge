@@ -2,17 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const endpoint = `https://1bicm7p4oc.execute-api.us-east-1.amazonaws.com/dev`;
+const endpoint = `https://n2v0i9br7l.execute-api.us-east-1.amazonaws.com/dev`;
 
 export interface IPerson {
   personId: string;
   firstName: string;
   lastName: string;
-  uidCreated: number;
+  uidCreated: string;
   rg: string;
   cpf: string;
   cnpj: string;
   searchPages: string;
+  reportUrl: string;
   createdAt: number;
   status: any;
 }
@@ -27,6 +28,10 @@ export class PersonService {
 
   getPeople(): Observable<IPerson[]> {
     return this.http.get<IPerson[]>(`${endpoint}/person`);
+  }
+
+  generateReport(personId: string): Observable<IPerson[]> {
+    return this.http.get<IPerson[]>(`${endpoint}/person/${personId}/report`);
   }
 
 }

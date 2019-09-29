@@ -12,6 +12,7 @@ import { SivecResult } from '../models/sivecResult';
 import { AmDynamodbDataMapper } from "../repositories/dynamoDataMapper";
 import { ArispResult } from './../models/arispResult';
 import { ArpenspResult } from './../models/arpenspResult';
+import { CagedResult } from './../models/cagedResult';
 import { ConsultaSocioResult } from './../models/consultaSocioResult';
 import { EscavadorResult } from './../models/escavadorResult';
 import { GoogleResult } from './../models/googleResult';
@@ -26,21 +27,26 @@ export class PersonService {
   }
 
   public async createPerson(person: Person) {
-    person.status = {
-      arisp: 'starting',
-      arpensp: 'starting',
-      cadesp: 'starting',
-      caged: 'starting',
-      censec: 'starting',
-      consultaSocio: 'starting',
-      escavador: 'starting',
-      google: 'starting',
-      infocrim: 'starting',
-      infoseg: 'starting',
-      jucesp: 'starting',
-      siel: 'starting',
-      sivec: 'starting',
-    };
+    const search = person.searchPages.match(/[a-zA-Z][0-9]/g);
+    person.status = {};
+    const pagesMap = {
+      A1: 'arisp',
+      A2: 'arpensp',
+      C1: 'cadesp',
+      C3: 'caged',
+      C2: 'censec',
+      C4: 'consultaSocio',
+      E1: 'escavador',
+      G1: 'google',
+      I1: 'infocrim',
+      I2: 'infoseg',
+      J1: 'jucesp',
+      S1: 'siel',
+      S2: 'sivec',
+    }
+    for (const page of search) {
+      person.status[pagesMap[page]] = 'starting';
+    }
     return this.dataMapper.put(person);
   }
 
@@ -48,8 +54,8 @@ export class PersonService {
     return this.dataMapper.get(Object.assign(new Person, { personId }));
   }
 
-  public async generateReport(personId: string) {
-    let person = await this.getPersonById(personId);
+  public async getPersonByIdWithAllData(personId: string) {
+    const person = await this.getPersonById(personId);
 
     const results = {};
 
@@ -63,6 +69,7 @@ export class PersonService {
     results['arpensp'] = await this.dataMapper.query(ArpenspResult, {personId: person.personId}, {indexName: 'personId-index'});
     results['cadesp'] = await this.dataMapper.query(CadespResult, {personId: person.personId}, {indexName: 'personId-index'});
     results['censec'] = await this.dataMapper.query(CensecResult, {personId: person.personId}, {indexName: 'personId-index'});
+    results['caged'] = await this.dataMapper.query(CagedResult, {personId: person.personId}, {indexName: 'personId-index'});
     results['infocrim'] = await this.dataMapper.query(InfocrimResult, {personId: person.personId}, {indexName: 'personId-index'});
     results['infoseg'] = await this.dataMapper.query(InfocrimResult, {personId: person.personId}, {indexName: 'personId-index'});
     results['jucesp'] = await this.dataMapper.query(JucespResult, {personId: person.personId}, {indexName: 'personId-index'});
@@ -70,6 +77,12 @@ export class PersonService {
     results['sivec'] = await this.dataMapper.query(SivecResult, {personId: person.personId}, {indexName: 'personId-index'});
 
     person['result'] = results;
+
+    return person;
+  }
+
+  public async generateReport(personId: string) {
+    let person = await this.getPersonByIdWithAllData(personId);
 
     try {
       const api = axios.create({

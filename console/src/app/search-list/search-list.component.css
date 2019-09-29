@@ -26,6 +26,10 @@ mat-card-header {
     color: white;
 }
 
+.badge-success-color {
+    color: #28a745;
+}
+
 .badge {
     padding: 4px 7px;
     border-radius: 50px;

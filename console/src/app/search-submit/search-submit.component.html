@@ -3,7 +3,7 @@
     <mat-card-title>Pesquisar pessoa</mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider> <br>
-  <form *ngIf="showForm" [formGroup]="form" (ngSubmit)="submit()">
+  <form [@slideInOut]="animationState" [formGroup]="form" (ngSubmit)="submit()">
     <mat-card-content>
       <div fxLayout="row wrap" fxLayoutAlign="space-between">
         <mat-form-field fxFlex.gt-xs="22" fxFlex.lt-sm="39">
