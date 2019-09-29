@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Tribunal"
+             x:Class="Tribunal.MainPage"
+             xmlns:vm="clr-namespace:Tribunal.ViewModels"
+             xmlns:tapped="clr-namespace:Tribunal.Views.Components"
+             Title="Pesquisas">
+    <ContentPage.BindingContext>
+        <vm:MainViewModel></vm:MainViewModel>
+    </ContentPage.BindingContext>
+
+    <StackLayout HorizontalOptions="Fill">
+        <ListView  HorizontalOptions="Fill" HasUnevenRows="true" ItemsSource="{Binding People}"
+                   SelectedItem="{ Binding PersonSelected}" 
+                   tapped:ItemTappedAttached.Command="{ Binding ListViewClicked }">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Margin="10" HorizontalOptions="Fill">
+                            <!--<Frame HasShadow="False" BackgroundColor="#9F7E69" Padding="0" VerticalOptions="CenterAndExpand" WidthRequest="55" HeightRequest="50" CornerRadius="35">
+                                <Label Text="M" Font="Bold,20" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="#FFFFFF" ></Label>
+                            </Frame>-->
+                            <StackLayout Orientation="Vertical" HorizontalOptions="Start" Padding="0">
+                                <Label Text="{Binding Name}" TextColor="#505050" Font="Bold,20"></Label>
+                                <Label Text="{Binding CPF, StringFormat='CPF: {0:F0}'}" TextColor="#acacac"></Label>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Padding="0,5,0,5" HorizontalOptions="EndAndExpand">
+                                <Label Text="{Binding CreatedAtDate, StringFormat='{0:dd/MM/yyyy}'}" LineBreakMode="NoWrap" Font="Bold" TextColor="#acacac" HorizontalOptions="EndAndExpand" VerticalOptions="Start"></Label>
+                                <Label Text="{Binding StatusText, StringFormat='~{0:F0}'}" TextColor="#acacac" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand"></Label>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
