@@ -28,7 +28,8 @@ namespace NetDataChallenge.Service
                            Portal = "Google",
                            Status = "finished"
                        }
-                   }
+                   },
+                   PersonId = "1"
                },
                new PessoaModel(){
                    FirstName = "Caio",
@@ -49,7 +50,8 @@ namespace NetDataChallenge.Service
                            Portal = "Google",
                            Status = "finished"
                        }
-                   }
+                   },
+                   PersonId = "2"
                },
                new PessoaModel(){
                    FirstName = "Gabriel",
@@ -70,7 +72,8 @@ namespace NetDataChallenge.Service
                            Portal = "Google",
                            Status = "starting"
                        }
-                   }
+                   },
+                   PersonId = "3"
                }
 
         };
@@ -84,6 +87,11 @@ namespace NetDataChallenge.Service
         public IList<PessoaModel> FindAll()
         {
             return pessoas;
+        }
+
+        public PessoaModel FindById(string _id)
+        {
+            return pessoas.SingleOrDefault<PessoaModel>(p => p.PersonId == _id);
         }
     }
 }
