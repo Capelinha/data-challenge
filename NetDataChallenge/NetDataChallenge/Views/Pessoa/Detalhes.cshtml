@@ -16,34 +16,10 @@
                     @Html.DisplayNameFor(model => model.FirstName)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.FirstName)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.LastName)
-                </dt><br />
-                <dd class="col-sm-12">
-                    @Html.DisplayFor(model => model.LastName)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Rg)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Rg)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Cpf)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Cpf)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Cnpj)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Cnpj)
+                    <p>@Model.FirstName @Model.LastName</p>
                 </dd>
             </dl>
-            <table class="table">
+            <table class="table table-sm">
                 <thead class="thead-light">
                     <tr>
                         <th>Portal</th>
