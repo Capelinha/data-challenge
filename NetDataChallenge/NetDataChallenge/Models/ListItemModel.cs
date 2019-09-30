@@ -12,6 +12,6 @@ namespace NetDataChallenge.Models
         public double Progress { get; set; }
         public double Correct { get; set; }
         public bool Status { get; set; }
-        public string id { get; set; }
+        public string Id { get; set; }
     }
 }
