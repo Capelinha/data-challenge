@@ -47,11 +47,20 @@
                         <label asp-for="SearchPage"></label>
                         <select class="selectpicker col-md-11 form-control" multiple data-live-search="true"
                                 asp-for="Portals">
-                            <option itemValue="A1" itemLabel="Facebook">Facebook</option>
-                            <option itemValue="A2" itemLabel="Sivec">Sivec</option>
-                            <option itemValue="C1" itemLabel="Google Maps">Google Maps</option>
-                            <option itemValue="C2" itemLabel="Jucesp">Jucesp</option>
-                            <option itemValue="C3" itemLabel="Linkedin">Linkedin</option>
+                            <option itemValue="A1" itemLabel="Arisp">Arisp</option>
+                            <option itemValue="A2" itemLabel="Arpensp">Arpensp</option>
+                            <option itemValue="C1" itemLabel="Cadesp">Cadesp</option>
+                            <option itemValue="C2" itemLabel="Censec">Censec</option>
+                            <option itemValue="C3" itemLabel="Caged">Caged</option>
+                            <option itemValue="C4" itemLabel="Consulta Socio">Consulta Socio</option>
+                            <option itemValue="E1" itemLabel="Escavador">Escavador</option>
+                            <option itemValue="G1" itemLabel="Google">Google</option>
+                            <option itemValue="I1" itemLabel="Infocrim">Infocrim</option>
+                            <option itemValue="I2" itemLabel="Infoseg">Infoseg</option>
+                            <option itemValue="J1" itemLabel="Jucesp">Jucesp</option>
+                            <option itemValue="S1" itemLabel="Siel">Siel</option>
+                            <option itemValue="S2" itemLabel="Sivec">Sivec</option>
+                            
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Adicionar</button>
@@ -93,10 +102,11 @@
                                 }
                             </td>
                             <td>
-                                <a class="btn btn-info" asp-controller="Pessoa" asp-action="Relatorio">Relatório</a>
+                                @if (pessoa.Status)
+                                {
+                                    <a class="btn btn-info" asp-action="Relatorio" asp-route-id="@pessoa.Id" target="_blank">Relatório</a>
+                                }
                                 <button class="btn btn-info detail" data-id="@pessoa.Id">Detalhes</button>
-                                <a class="btn btn-info" asp-controller="Pessoa" asp-action="Editar" asp-data-id="@pessoa.Id">Editar</a>
-                                <a class="btn btn-info" asp-controller="Pessoa" asp-action="Exluir">Excluir</a>
                             </td>
                         </tr>
                     }

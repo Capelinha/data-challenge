@@ -13,5 +13,6 @@ namespace NetDataChallenge.Models
         public double Correct { get; set; }
         public bool Status { get; set; }
         public string Id { get; set; }
+        public string ReportUrl { get; set; }
     }
 }

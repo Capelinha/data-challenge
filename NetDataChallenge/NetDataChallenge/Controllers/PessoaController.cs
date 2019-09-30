@@ -21,7 +21,7 @@ namespace NetDataChallenge.Controllers
         //Função para gerar os itens da lista
         public IList<ListItemModel> makeList()
         {
-            var pessoas = pessoaService.FindAll();
+            var pessoas = pessoaService.FindAll().OrderByDescending(p=> p.CreatedAt);
             IList<ListItemModel> listItems = new List<ListItemModel>();
             //cálculo das porcentagens dos items
             foreach (var pessoa in pessoas)
@@ -32,26 +32,27 @@ namespace NetDataChallenge.Controllers
                 var item = new ListItemModel();
                 item.Name = pessoa.FirstName +" " + pessoa.LastName;
                 item.Status = true;
-                foreach (var stats in pessoa.ListaStatus)
+                foreach (var stats in pessoa.Status.Keys)
                 {
                     tot++;
-                    if (stats.Status.Equals("starting"))
+                    if (pessoa.Status[stats].Equals("starting"))
                     {
                         item.Status = false;
                     }
-                    else if (stats.Status.Equals("finished"))
+                    else if (pessoa.Status[stats].Equals("finished"))
                     {
                         progress++;
                         correct++;
                     }
-                    else if (stats.Status.Equals("error"))
+                    else if (pessoa.Status[stats].Equals("error"))
                     {
                         progress++;
                     }
                 }
                 item.Progress = Math.Round((progress / tot) * 100);
                 item.Correct = Math.Round((correct / tot) * 100);
-                item.Id = "1";
+                item.Id = pessoa.PersonId;
+                item.ReportUrl = pessoa.ReportUrl;
                 listItems.Add(item);
             }
             return listItems;
@@ -61,44 +62,69 @@ namespace NetDataChallenge.Controllers
         public IActionResult Index()
         {
             ViewBag.Pessoas = makeList();
-            return View(new PessoaModel()
-            {
-                UidCreated = "sfdgsfjksadlghkalhsdkgadçkAKJHDASDKF"
-            });
+            return View(new PessoaModel());
         }
 
         [HttpPost]
         public IActionResult AddSearch(PessoaModel pessoa)
         {
-            pessoa.ListaStatus = new List<StatusModel>(){
-                new StatusModel()
-                {
-                    Portal = "Consulta Socio",
-                    Status = "error"
-                },
-                new StatusModel()
-                {
-                    Portal = "Escavador",
-                    Status = "error"
-                },
-                new StatusModel()
-                {
-                    Portal = "Google",
-                    Status = "error"
-                }
-            };
             string search = "";
             foreach(var portal in pessoa.Portals)
             {
-                if (portal.Equals("Facebook"))
+                if (portal.Equals("Arisp"))
                 {
-                    search = search + "F1";
-                } else if (portal.Equals("Linkedin"))
+                    search = search + "A1";
+                } else if (portal.Equals("Arpensp"))
                 {
-                    search = search + "L1";
+                    search = search + "A2";
+                }
+                else if (portal.Equals("Cadesp"))
+                {
+                    search = search + "C1";
+                }
+                else if (portal.Equals("Censec"))
+                {
+                    search = search + "C2";
+                }
+                else if (portal.Equals("Caged"))
+                {
+                    search = search + "C3";
+                }
+                else if (portal.Equals("Consulta Socio"))
+                {
+                    search = search + "C4";
+                }
+                else if (portal.Equals("Escavador"))
+                {
+                    search = search + "E1";
+                }
+                else if (portal.Equals("Google"))
+                {
+                    search = search + "G1";
+                }
+                else if (portal.Equals("Infocrim"))
+                {
+                    search = search + "I1";
+                }
+                else if (portal.Equals("Infoseg"))
+                {
+                    search = search + "I2";
+                }
+                else if (portal.Equals("Jucesp"))
+                {
+                    search = search + "J1";
+                }
+                else if (portal.Equals("Siel"))
+                {
+                    search = search + "S1";
+                }
+                else if (portal.Equals("Sivec"))
+                {
+                    search = search + "S2";
                 }
             }
             pessoa.SearchPage = search;
+            pessoa.UidCreated = "sfdgsfjksadlghkalhsdkgadçkAKJHDASDKF";
             pessoaService.Insert(pessoa);
             ViewBag.Pessoas = makeList();
             return RedirectToAction("Index", "Pessoa");
@@ -108,6 +134,14 @@ namespace NetDataChallenge.Controllers
         {
             PessoaModel pessoa = pessoaService.FindById(id);
             return View(pessoa);
+        }
+
+        public IActionResult Relatorio(string id)
+        {
+            PessoaModel pessoa = pessoaService.FindById(id);
+            if (pessoa.ReportUrl == null)
+                pessoa = pessoaService.FindReport(id);
+            return Redirect(pessoa.ReportUrl);
         }
     }
 }

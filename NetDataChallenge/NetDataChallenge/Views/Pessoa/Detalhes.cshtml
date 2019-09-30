@@ -26,11 +26,11 @@
                         <th>Status</th>
                     </tr>
                 </thead>
-                @foreach (StatusModel stats in Model.ListaStatus)
+                @foreach (var stats in Model.Status.Keys)
                 {
                     <tr>
-                        <td>@stats.Portal</td>
-                        <td>@stats.Status</td>
+                        <td>@stats</td>
+                        <td>@Model.Status[stats]</td>
                     </tr>
                 }
             </table>
