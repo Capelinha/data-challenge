@@ -1,0 +1,135 @@
+﻿@model PessoaModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Console</title>
+
+</head>
+<body>
+    <br>
+    <div class="container-fluid">
+
+        <div class="card">
+            <h3 class="card-header">Pesquisar Pessoa</h3>
+            <div class="card-body">
+                <form asp-action="AddSearch" asp-controller="Pessoa" asp-route-id="" method="post">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="FirstName"></label>
+                            <input asp-for="FirstName" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="LastName"></label>
+                            <input asp-for="LastName" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label asp-for="Rg"></label>
+                            <input asp-for="Rg" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Cpf"></label>
+                            <input asp-for="Cpf" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label asp-for="Cnpj"></label>
+                            <input asp-for="Cnpj" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SearchPage"></label>
+                        <select class="selectpicker col-md-11 form-control" multiple data-live-search="true"
+                                asp-for="Portals">
+                            <option itemValue="A1" itemLabel="Arisp">Arisp</option>
+                            <option itemValue="A2" itemLabel="Arpensp">Arpensp</option>
+                            <option itemValue="C1" itemLabel="Cadesp">Cadesp</option>
+                            <option itemValue="C2" itemLabel="Censec">Censec</option>
+                            <option itemValue="C3" itemLabel="Caged">Caged</option>
+                            <option itemValue="C4" itemLabel="Consulta Socio">Consulta Socio</option>
+                            <option itemValue="E1" itemLabel="Escavador">Escavador</option>
+                            <option itemValue="G1" itemLabel="Google">Google</option>
+                            <option itemValue="I1" itemLabel="Infocrim">Infocrim</option>
+                            <option itemValue="I2" itemLabel="Infoseg">Infoseg</option>
+                            <option itemValue="J1" itemLabel="Jucesp">Jucesp</option>
+                            <option itemValue="S1" itemLabel="Siel">Siel</option>
+                            <option itemValue="S2" itemLabel="Sivec">Sivec</option>
+                            
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                    <button class="btn btn-light">Limpar</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <div class="container-fluid">
+
+        <div class="card">
+            <h3 class="card-header">Pesquisas Recentes</h3>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tr>
+                        <th>No.</th>
+                        <th>Nome</th>
+                        <th>Progresso</th>
+                        <th>Acertabilidade</th>
+                        <th>Status</th>
+                        <th>Opções</th>
+                    </tr>
+                    @foreach (ListItemModel pessoa in ViewBag.Pessoas)
+                    {
+                        <tr>
+                            <td>1</td>
+                            <td>@pessoa.Name</td>
+                            <td>@pessoa.Progress %</td>
+                            <td>@pessoa.Correct %</td>
+                            <td>
+                                @if (pessoa.Status)
+                                {
+                                    <span class="badge badge-success badge-pill">Finalizado</span>
+                                }
+                                else {
+                                    <span class="badge badge-warning badge-pill">Em andamento...</span>
+                                }
+                            </td>
+                            <td>
+                                @if (pessoa.Status)
+                                {
+                                    <a class="btn btn-info" asp-action="Relatorio" asp-route-id="@pessoa.Id" target="_blank">Relatório</a>
+                                }
+                                <button class="btn btn-info detail" data-id="@pessoa.Id">Detalhes</button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modal">
+
+    </div>
+    @section scripts{ 
+        <script>
+            $(function () {
+                $(".detail").click(function () {
+                    var id = $(this).attr("data-id");
+                    $("#modal").load("/Pessoa/Detalhes?id=" + id, function () {
+                        $("#modal").modal('show');
+                    })
+                });
+            })
+        </script>
+    }
+</body>
+</html>
+
+
