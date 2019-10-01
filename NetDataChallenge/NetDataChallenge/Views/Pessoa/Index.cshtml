@@ -46,6 +46,7 @@
                     <div class="form-group">
                         <label asp-for="Portals"></label>
                         <select class="selectpicker col-md-11 form-control" multiple data-live-search="true"
+                                id="portals"
                                 asp-for="Portals">
                             <option itemValue="A1" itemLabel="Arisp">Arisp</option>
                             <option itemValue="A2" itemLabel="Arpensp">Arpensp</option>
@@ -127,6 +128,10 @@
                     })
                 });
             })
+            $('#portals option').each(function () {
+                this.selected = true;
+            });
+            $('#portals').multiselect("refresh");
         </script>
     }
 </body>
