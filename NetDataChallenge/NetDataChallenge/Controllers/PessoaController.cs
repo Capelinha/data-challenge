@@ -23,6 +23,7 @@ namespace NetDataChallenge.Controllers
         {
             var pessoas = pessoaService.FindAll().OrderByDescending(p=> p.CreatedAt);
             IList<ListItemModel> listItems = new List<ListItemModel>();
+            int no = 1;
             //cálculo das porcentagens dos items
             foreach (var pessoa in pessoas)
             {
@@ -53,6 +54,8 @@ namespace NetDataChallenge.Controllers
                 item.Correct = Math.Round((correct / tot) * 100);
                 item.Id = pessoa.PersonId;
                 item.ReportUrl = pessoa.ReportUrl;
+                item.Number = no;
+                no++;
                 listItems.Add(item);
             }
             return listItems;
