@@ -89,7 +89,7 @@
                     @foreach (ListItemModel pessoa in ViewBag.Pessoas)
                     {
                         <tr>
-                            <td>1</td>
+                            <td>@pessoa.Number</td>
                             <td>@pessoa.Name</td>
                             <td>@pessoa.Progress %</td>
                             <td>@pessoa.Correct %</td>
