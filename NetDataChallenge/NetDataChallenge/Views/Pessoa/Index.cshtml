@@ -14,59 +14,64 @@
 <body>
     <br>
     <div class="container-fluid">
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#pesquisar">Fazer Nova Pesquisa</button>
+        <div id="pesquisar" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Pesquisar Pessoa</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-action="AddSearch" asp-controller="Pessoa" asp-route-id="" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="FirstName"></label>
+                                    <input asp-for="FirstName" class="form-control" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="LastName"></label>
+                                    <input asp-for="LastName" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Rg"></label>
+                                    <input asp-for="Rg" class="form-control" />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Cpf"></label>
+                                    <input asp-for="Cpf" class="form-control" />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Cnpj"></label>
+                                    <input asp-for="Cnpj" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Portals"></label>
+                                <select class="selectpicker col-md-11 form-control" multiple data-live-search="true"
+                                        id="portals"
+                                        asp-for="Portals">
+                                    <option itemValue="A1" itemLabel="Arisp">Arisp</option>
+                                    <option itemValue="A2" itemLabel="Arpensp">Arpensp</option>
+                                    <option itemValue="C1" itemLabel="Cadesp">Cadesp</option>
+                                    <option itemValue="C2" itemLabel="Censec">Censec</option>
+                                    <option itemValue="C3" itemLabel="Caged">Caged</option>
+                                    <option itemValue="C4" itemLabel="Consulta Socio">Consulta Socio</option>
+                                    <option itemValue="E1" itemLabel="Escavador">Escavador</option>
+                                    <option itemValue="G1" itemLabel="Google">Google</option>
+                                    <option itemValue="I1" itemLabel="Infocrim">Infocrim</option>
+                                    <option itemValue="I2" itemLabel="Infoseg">Infoseg</option>
+                                    <option itemValue="J1" itemLabel="Jucesp">Jucesp</option>
+                                    <option itemValue="S1" itemLabel="Siel">Siel</option>
+                                    <option itemValue="S2" itemLabel="Sivec">Sivec</option>
 
-        <div class="card">
-            <h3 class="card-header">Pesquisar Pessoa</h3>
-            <div class="card-body">
-                <form asp-action="AddSearch" asp-controller="Pessoa" asp-route-id="" method="post">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label asp-for="FirstName"></label>
-                            <input asp-for="FirstName" class="form-control" />
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label asp-for="LastName"></label>
-                            <input asp-for="LastName" class="form-control" />
-                        </div>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+                        </form>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label asp-for="Rg"></label>
-                            <input asp-for="Rg" class="form-control" />
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label asp-for="Cpf"></label>
-                            <input asp-for="Cpf" class="form-control" />
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label asp-for="Cnpj"></label>
-                            <input asp-for="Cnpj" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Portals"></label>
-                        <select class="selectpicker col-md-11 form-control" multiple data-live-search="true"
-                                id="portals"
-                                asp-for="Portals">
-                            <option itemValue="A1" itemLabel="Arisp">Arisp</option>
-                            <option itemValue="A2" itemLabel="Arpensp">Arpensp</option>
-                            <option itemValue="C1" itemLabel="Cadesp">Cadesp</option>
-                            <option itemValue="C2" itemLabel="Censec">Censec</option>
-                            <option itemValue="C3" itemLabel="Caged">Caged</option>
-                            <option itemValue="C4" itemLabel="Consulta Socio">Consulta Socio</option>
-                            <option itemValue="E1" itemLabel="Escavador">Escavador</option>
-                            <option itemValue="G1" itemLabel="Google">Google</option>
-                            <option itemValue="I1" itemLabel="Infocrim">Infocrim</option>
-                            <option itemValue="I2" itemLabel="Infoseg">Infoseg</option>
-                            <option itemValue="J1" itemLabel="Jucesp">Jucesp</option>
-                            <option itemValue="S1" itemLabel="Siel">Siel</option>
-                            <option itemValue="S2" itemLabel="Sivec">Sivec</option>
-                            
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Adicionar</button>
-                    <button class="btn btn-light">Limpar</button>
-                </form>
+                </div>
             </div>
         </div>
 
@@ -98,7 +103,8 @@
                                 {
                                     <span class="badge badge-success badge-pill">Finalizado</span>
                                 }
-                                else {
+                                else
+                                {
                                     <span class="badge badge-warning badge-pill">Em andamento...</span>
                                 }
                             </td>
@@ -118,7 +124,7 @@
     <div class="modal" id="modal">
 
     </div>
-    @section scripts{ 
+    @section scripts{
         <script>
             $(function () {
                 $(".detail").click(function () {
