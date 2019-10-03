@@ -29,8 +29,19 @@
                 @foreach (var stats in Model.Status.Keys)
                 {
                     <tr>
-                        <td>@stats</td>
-                        <td>@Model.Status[stats]</td>
+                        <td>@stats.ToUpper()</td>
+                        @if (@Model.Status[stats].Equals("finished"))
+                        {
+                            <td>Finalizado</td>
+                        }
+                        else if (@Model.Status[stats].Equals("error"))
+                        {
+                            <td>Falhou</td>
+                        }
+                        else
+                        {
+                            <td>Em progresso...</td>
+                        }
                     </tr>
                 }
             </table>
