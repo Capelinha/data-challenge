@@ -14,7 +14,7 @@ namespace NetDataChallenge.Service
         public IList<PessoaModel> FindAll()
         {
             var people = new List<PessoaModel>();
-            var uri = "https://n2v0i9br7l.execute-api.us-east-1.amazonaws.com/dev/person";
+            var uri = "https://dpv95yr5p2.execute-api.us-east-1.amazonaws.com/dev/person";
             System.Net.Http.HttpClient client = new HttpClient();
             var resposta = client.GetAsync(uri).Result;
             if (resposta.IsSuccessStatusCode)
@@ -31,7 +31,7 @@ namespace NetDataChallenge.Service
 
         public void Insert(PessoaModel pessoa)
         {
-            var uri = "https://n2v0i9br7l.execute-api.us-east-1.amazonaws.com/dev/person";
+            var uri = "https://dpv95yr5p2.execute-api.us-east-1.amazonaws.com/dev/person";
             var conteudoJson = Newtonsoft.Json.JsonConvert.SerializeObject(pessoa);
             var conteudoJsonString = new StringContent(conteudoJson, Encoding.UTF8, "application/json");
             HttpClient client = new HttpClient();
@@ -44,7 +44,7 @@ namespace NetDataChallenge.Service
 
         public PessoaModel FindById(string id)
         {
-            var uri = String.Format("https://n2v0i9br7l.execute-api.us-east-1.amazonaws.com/dev/person/{0}", id);
+            var uri = String.Format("https://dpv95yr5p2.execute-api.us-east-1.amazonaws.com/dev/person/{0}", id);
             HttpClient client = new HttpClient();
             var resposta = client.GetAsync(uri).Result;
             if (resposta.IsSuccessStatusCode)
@@ -61,7 +61,7 @@ namespace NetDataChallenge.Service
 
         public PessoaModel FindReport(string id)
         {
-            var uri = String.Format("https://n2v0i9br7l.execute-api.us-east-1.amazonaws.com/dev/person/{0}/report", id);
+            var uri = String.Format("https://dpv95yr5p2.execute-api.us-east-1.amazonaws.com/dev/person/{0}/report", id);
             HttpClient client = new HttpClient();
             var resposta = client.GetAsync(uri).Result;
             if (resposta.IsSuccessStatusCode)

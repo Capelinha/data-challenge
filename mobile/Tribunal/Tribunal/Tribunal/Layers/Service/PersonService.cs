@@ -11,7 +11,7 @@ namespace Tribunal.Layers.Service
         public IList<PersonModel> GetPeople()
         {
             var people = new List<PersonModel>();
-            var uri = "https://n2v0i9br7l.execute-api.us-east-1.amazonaws.com/dev/person";
+            var uri = "https://dpv95yr5p2.execute-api.us-east-1.amazonaws.com/dev/person";
             System.Net.Http.HttpClient client = new HttpClient();
             var resposta = client.GetAsync(uri).Result;
             if (resposta.IsSuccessStatusCode)
