@@ -10,6 +10,11 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
 
   for (const record of event.Records) {
     const personSearch: Person = Object.assign(new Person, JSON.parse(record.Sns.Message));
+
+    if (personSearch.searchPages.indexOf('C4') === -1) {
+      break;
+    }
+
     const crawlerService = new CrawlerService();
 
     const driver: Driver = buildDriver();
@@ -25,6 +30,10 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         if (await person.getAttribute('title') === name) {
           find.push(person);
         }
+      }
+
+      if (find.length === 0) {
+        throw new Error('Results not found');
       }
 
       // Enter people's page and extract data
@@ -86,6 +95,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
         };
         await crawlerService.updateStatus(person.personId, 'consultaSocio', 'finished');
         await crawlerService.createResult(Object.assign(new ConsultaSocioResult, response));
+        break;
       }
 
     } catch (e) {

@@ -11,6 +11,10 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
   for (const record of event.Records) {
     const person: Person = Object.assign(new Person, JSON.parse(record.Sns.Message));
 
+    if (person.searchPages.indexOf('C2') === -1) {
+      break;
+    }
+
     const driver: Driver = buildDriver();
 
     const crawlerService = new CrawlerService();

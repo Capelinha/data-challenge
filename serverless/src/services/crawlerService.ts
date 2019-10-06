@@ -1,5 +1,5 @@
 import { AmDynamodbDataMapper } from "../repositories/dynamoDataMapper";
-import { Person } from '../models/person';
+import { SQS } from "aws-sdk";
 
 /**
  * Class middleware that execute business rules for crawler service.
@@ -23,9 +23,10 @@ export class CrawlerService {
    * @param result object that represent the result
    */
   public async updateStatus(personId: string, portal: string, status: string) {
-    const person = await this.dataMapper.get(Object.assign(new Person, { personId }));
-    person.status[portal] = status;
-    return this.dataMapper.update(person);
+    await new SQS().sendMessage({
+      MessageBody: JSON.stringify({personId, portal, status}),
+      QueueUrl: `https://sqs.us-east-1.amazonaws.com/${process.env.AWS_ACCOUNT}/status-update`
+    }).promise();
   }
 
 }

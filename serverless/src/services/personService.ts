@@ -51,7 +51,21 @@ export class PersonService {
   }
 
   public async getPersonById(personId: string) {
-    return this.dataMapper.get(Object.assign(new Person, { personId }));
+    const person = await this.dataMapper.get(Object.assign(new Person, { personId }));
+    if (new Date().getTime() - person.createdAt > 220000) {
+      for(const key in person.status) {
+        if (person.status[key] === 'starting') {
+          person.status[key] = 'error';
+        }
+      }
+    }
+    return person;
+  }
+
+  public async updateStatus(personId: string, portal: string, status: string) {
+    const person = await this.dataMapper.get(Object.assign(new Person, { personId }));
+    person.status[portal] = status;
+    return this.dataMapper.update(person);
   }
 
   public async getPersonByIdWithAllData(personId: string) {

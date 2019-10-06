@@ -7,8 +7,6 @@ plugins:
 
 package:
   individually: false
-  exclude:
-    - node_modules/**
   excludeDevDependencies: true
 
 provider:
@@ -22,162 +20,163 @@ provider:
   environment: ${file(./conf/env.yml):${self:custom.stage}}
 
 custom:
+  webpackIncludeModules : true
   stage: ${env:SLS_STAGE, opt:stage, self:provider.stage}
 
 functions:
-  # scraperEscavador:
-  #   handler: src/handlers/scrapers/scraperEscavador.handler
-  #   layers: 
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
-  #   memorySize: 1156
-  #   timeout: 30
-  #   events:
-  #     - sns: search
-  # scraperConsultaSocio:
-  #   handler: src/handlers/scrapers/scraperConsultaSocio.handler
-  #   layers: 
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
-  #   memorySize: 1156
-  #   timeout: 30
-  #   events:
-  #     - sns: search
-  # scraperMaps:
-  #   handler: src/handlers/scrapers/scraperMaps.handler
-  #   layers: 
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
-  #   memorySize: 1156
-  #   timeout: 30
-  #   events:
-  #     - sns: search
+  # 1
+  scraperEscavador:
+    handler: src/handlers/scrapers/scraperEscavador.handler
+    layers:
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
+    memorySize: 1156
+    timeout: 30
+    events:
+      - sns: search
+  scraperConsultaSocio:
+    handler: src/handlers/scrapers/scraperConsultaSocio.handler
+    layers:
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
+    memorySize: 1156
+    timeout: 30
+    events:
+      - sns: search
+  scraperMaps:
+    handler: src/handlers/scrapers/scraperMaps.handler
+    layers:
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
+    memorySize: 1156
+    timeout: 30
+    events:
+      - sns: search
   scraperGoogle:
     handler: src/handlers/scrapers/scraperGoogle.handler
-    layers: 
-      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
+    layers:
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
     memorySize: 1156
     timeout: 30
     events:
       - sns: search
+  # 2
   # scraperJucesp:
   #   handler: src/handlers/scrapers/scraperJucesp.handler
-  #   layers: 
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
   #   memorySize: 1156
   #   timeout: 30
   #   events:
-  #     - sns: search
-  scraperSivec:
-    handler: src/handlers/scrapers/scraperSivec.handler
-    layers: 
-      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
-    memorySize: 1156
-    timeout: 30
-    events:
-      - sns: search
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
+  # scraperSivec:
+  #   handler: src/handlers/scrapers/scraperSivec.handler
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
+  #   memorySize: 1156
+  #   timeout: 30
+  #   events:
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
   # scraperArpensp:
   #   handler: src/handlers/scrapers/scraperArpensp.handler
-  #   layers: 
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
   #   memorySize: 1156
   #   timeout: 30
   #   events:
-  #     - sns: search
-  scraperSiel:
-    handler: src/handlers/scrapers/scraperSiel.handler
-    layers: 
-      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
-    memorySize: 1156
-    timeout: 30
-    events:
-      - sns: search
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
+  # scraperSiel:
+  #   handler: src/handlers/scrapers/scraperSiel.handler
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
+  #   memorySize: 1156
+  #   timeout: 30
+  #   events:
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
+  # 3
   # scraperCensec:
   #   handler: src/handlers/scrapers/scraperCensec.handler
-  #   layers: 
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
   #   memorySize: 1156
   #   timeout: 30
   #   events:
-  #     - sns: search
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
   # scraperInfocrim:
   #   handler: src/handlers/scrapers/scraperInfocrim.handler
-  #   layers: 
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
   #   memorySize: 1156
   #   timeout: 30
   #   events:
-  #     - sns: search
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
   # scraperInfoseg:
   #   handler: src/handlers/scrapers/scraperInfoseg.handler
-  #   layers: 
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
   #   memorySize: 1156
   #   timeout: 30
   #   events:
-  #     - sns: search
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
   # scraperCadesp:
   #   handler: src/handlers/scrapers/scraperCadesp.handler
-  #   layers: 
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
   #   memorySize: 1156
   #   timeout: 30
   #   events:
-  #     - sns: search
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
+  # 4
   # scraperArisp:
   #   handler: src/handlers/scrapers/scraperArisp.handler
-  #   layers: 
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
   #   memorySize: 1156
   #   timeout: 30
   #   events:
-  #     - sns: search
-  scraperCaged:
-    handler: src/handlers/scrapers/scraperCaged.handler
-    layers: 
-      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
-    memorySize: 1156
-    timeout: 30
-    events:
-      - sns: search
-  # scraperFacebook:
-  #   handler: src/handlers/scrapers/scraperFacebook.handler
-  #   layers: 
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:66
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
+  # scraperCaged:
+  #   handler: src/handlers/scrapers/scraperCaged.handler
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:69
   #   memorySize: 1156
   #   timeout: 30
   #   events:
-  #     - sns: search
-  createPerson:
-    handler: src/handlers/create/createPerson.handler
-    events:
-      - http:
-          method: post
-          path: person
-          cors: true
-  getPeople:
-    handler: src/handlers/read/getPeople.handler
-    events:
-      - http:
-          method: get
-          path: person
-          cors: true
-  getPersonById:
-    handler: src/handlers/read/getPersonById.handler
-    events:
-      - http:
-          method: get
-          path: person/{personId}
-          cors: true
-  getPersonByIdWithAllData:
-    handler: src/handlers/read/getPersonByIdWithAllData.handler
-    events:
-      - http:
-          method: get
-          path: person/{personId}/data
-          cors: true
-  generateReport:
-    handler: src/handlers/read/generateReport.handler
-    events:
-      - http:
-          method: get
-          path: person/{personId}/report
-          cors: true
-
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
+  # 5
+  # createPerson:
+  #   handler: src/handlers/create/createPerson.handler
+  #   events:
+  #     - http:
+  #         method: post
+  #         path: person
+  #         cors: true
+  # getPeople:
+  #   handler: src/handlers/read/getPeople.handler
+  #   events:
+  #     - http:
+  #         method: get
+  #         path: person
+  #         cors: true
+  # getPersonById:
+  #   handler: src/handlers/read/getPersonById.handler
+  #   events:
+  #     - http:
+  #         method: get
+  #         path: person/{personId}
+  #         cors: true
+  # getPersonByIdWithAllData:
+  #   handler: src/handlers/read/getPersonByIdWithAllData.handler
+  #   events:
+  #     - http:
+  #         method: get
+  #         path: person/{personId}/data
+  #         cors: true
+  # generateReport:
+  #   handler: src/handlers/read/generateReport.handler
+  #   events:
+  #     - http:
+  #         method: get
+  #         path: person/{personId}/report
+  #         cors: true
+  # updateStatus:
+  #   handler: src/handlers/update/updateStatus.handler
+  #   events:
+  #     - sqs: arn:aws:sqs:us-east-1:770168723546:status-update
