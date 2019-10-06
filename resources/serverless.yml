@@ -81,6 +81,13 @@ resources:
                   Resource: "*"
                 - Effect: Allow
                   Action:
+                    - sqs:SendMessage
+                    - sqs:ReceiveMessage
+                    - sqs:GetQueueAttributes
+                    - sqs:DeleteMessage
+                  Resource: "*"
+                - Effect: Allow
+                  Action:
                     - dynamodb:Query
                     - dynamodb:Scan
                     - dynamodb:GetItem
