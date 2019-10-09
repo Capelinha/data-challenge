@@ -1,4 +1,4 @@
-﻿@model NetDataChallenge.Models.PessoaModel
+@model NetDataChallenge.Models.PessoaModel
 
 @{
     Layout = null;
@@ -11,12 +11,28 @@
             <h3 class="modal-title">Detalhes da Pesquisa</h3>
         </div>
         <div class="modal-body">
-            <dl class="row">
+            <dl class="row" style="margin-bottom: 5px">
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.FirstName)
                 </dt>
                 <dd class="col-sm-10">
-                    <p>@Model.FirstName @Model.LastName</p>
+                    <p style="margin: 0">@Model.FirstName @Model.LastName</p>
+                </dd>
+            </dl>
+            <dl class="row" style="margin-bottom: 5px">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Cpf)
+                </dt>
+                <dd class="col-sm-10">
+                    <p style="margin: 0">@Model.Cpf</p>
+                </dd>
+            </dl>
+            <dl class="row" style="margin-bottom: 5px">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Rg)
+                </dt>
+                <dd class="col-sm-10">
+                    <p style="margin: 0">@Model.Rg</p>
                 </dd>
             </dl>
             <table class="table table-sm">
