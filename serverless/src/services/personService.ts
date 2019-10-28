@@ -36,6 +36,7 @@ export class PersonService {
       C3: 'caged',
       C2: 'censec',
       C4: 'consultaSocio',
+      D1: 'detran',
       E1: 'escavador',
       G1: 'google',
       I1: 'infocrim',

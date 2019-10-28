@@ -25,6 +25,7 @@ custom:
     cadespResult: ${self:custom.stage}.cadespResult
     arispResult: ${self:custom.stage}.arispResult
     cagedResult: ${self:custom.stage}.cagedResult
+    detranResult: ${self:custom.stage}.detranResult
 
 layers:
   ChromiumSelenium:
@@ -419,6 +420,28 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: "${self:custom.table.cagedResult}"
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: searchid
+            AttributeType: S
+          - AttributeName: personId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: searchid
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST   
+        GlobalSecondaryIndexes:
+          - IndexName: personId-index
+            KeySchema:
+              - AttributeName: personId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+    detranResultTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "${self:custom.table.detranResult}"
         PointInTimeRecoverySpecification:
           PointInTimeRecoveryEnabled: true
         AttributeDefinitions:

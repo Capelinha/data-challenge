@@ -13,7 +13,7 @@ export const buildDriver = () => {
   options.addArguments(
     'headless',
     'disable-gpu',
-    'window-size=800x600',
+    'window-size=1280x720',
     'no-sandbox',
     'user-data-dir=/tmp/user-data',
     'hide-scrollbars',
