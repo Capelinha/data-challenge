@@ -24,28 +24,28 @@
     <StackLayout 
         VerticalOptions="Center" 
         HorizontalOptions="Center"
-        BackgroundColor="White"
+        BackgroundColor="#0C1446"
         Padding="0,0,0,0"
         Margin="5">
         <StackLayout 
             VerticalOptions="StartAndExpand" 
             HorizontalOptions="FillAndExpand"
             Orientation="Horizontal"
-            BackgroundColor="#7C77B9"
-            Padding="10,20,0,20">
+            BackgroundColor="#FFFFFF"
+            Padding="10,20,0,20" >
             <StackLayout HorizontalOptions="StartAndExpand" Margin="40,0,0,0">
-                <Label Text="{Binding PersonSelected.Hitability, StringFormat='{0:F0}%'}" Font="Bold,35" HorizontalOptions="Center" TextColor="White" ></Label>
-                <Label Text="Acertabiliade" FontSize="Small" HorizontalOptions="Center" TextColor="White" ></Label>
+                <Label Text="{Binding PersonSelected.Hitability, StringFormat='{0:F0}%'}" Font="Bold,35" HorizontalOptions="Center" TextColor="#0C1446" ></Label>
+                <Label Text="Acertabiliade" FontSize="Small" HorizontalOptions="Center" TextColor="#0C1446" ></Label>
             </StackLayout>
             <StackLayout HorizontalOptions="EndAndExpand" Margin="0,0,40,0">
-                <Label Text="{Binding PersonSelected.Progress, StringFormat='{0:F0}%'}" Font="Bold,35" HorizontalOptions="Center" TextColor="White" ></Label>
-                <Label Text="Progresso" FontSize="Small" HorizontalOptions="Center" TextColor="White" ></Label>
+                <Label Text="{Binding PersonSelected.Progress, StringFormat='{0:F0}%'}" Font="Bold,35" HorizontalOptions="Center" TextColor="#0C1446" ></Label>
+                <Label Text="Progresso" FontSize="Small" HorizontalOptions="Center" TextColor="#0C1446" ></Label>
             </StackLayout>
         </StackLayout>
         <StackLayout 
             VerticalOptions="Center" 
             HorizontalOptions="Center"
-            BackgroundColor="#1976d2"
+            BackgroundColor="#0C1446"
             Margin="0,1,0,0"
             Padding="20, 20, 20, 20">
 
@@ -54,8 +54,8 @@
             <Label Text="{Binding PersonSelected.RG, StringFormat='RG: {0:F0}'}" HorizontalTextAlignment="Center" TextColor="#FFFFFF"></Label>
             <Label Text="{Binding PersonSelected.CNPJ, StringFormat='CNPJ: {0:F0}'}" HorizontalTextAlignment="Center" TextColor="#FFFFFF"></Label>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,20,0,0">
-                <Button Text="R" Font="Bold, 25" IsVisible="{Binding PersonSelected.Finished}" Command="{Binding ReportClicked}" Margin="10,0,10,0" TextColor="White" BackgroundColor="#8FBFE0" Padding="0" HorizontalOptions="Center" WidthRequest="50" CornerRadius="35"></Button>
-                <Button Text="P" Font="Bold, 25" Margin="10,0,10,0" TextColor="White" BackgroundColor="#8FBFE0" Padding="0" HorizontalOptions="Center" WidthRequest="50" CornerRadius="35"></Button>
+                <Button Text="R" Font="Bold, 25" IsVisible="{Binding PersonSelected.Finished}" Command="{Binding ReportClicked}" Margin="10,0,10,0" TextColor="#0C1446" BackgroundColor="#FFFFFF" Padding="0" HorizontalOptions="Center" WidthRequest="50" CornerRadius="35"></Button>
+                <Button Text="P" Font="Bold, 25" Margin="10,0,10,0" TextColor="#0C1446" BackgroundColor="#FFFFFF" Padding="0" HorizontalOptions="Center" WidthRequest="50" CornerRadius="35"></Button>
             </StackLayout>
         </StackLayout>
     </StackLayout>

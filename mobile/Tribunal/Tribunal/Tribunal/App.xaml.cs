@@ -19,6 +19,7 @@ namespace Tribunal
         {
             MessagingCenter.Subscribe<PersonModel>(new PersonModel(), "ShowDetail", (e) =>
             {
+              
                 MainPage.Navigation.PushPopupAsync(new DetailPage());
             });
         }
@@ -31,6 +32,7 @@ namespace Tribunal
         {
             
         }
+        
         
     }
 }

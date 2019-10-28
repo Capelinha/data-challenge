@@ -24,5 +24,12 @@ namespace Tribunal.Views
             Navigation.PopPopupAsync();
             return false;
         }
+
+        protected override void OnDisappearingAnimationEnd()
+        {
+            base.OnDisappearingAnimationEnd();
+            Navigation.PopPopupAsync();
+           
+        }
     }
 }
