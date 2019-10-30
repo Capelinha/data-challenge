@@ -23,6 +23,25 @@ namespace Tribunal.ViewModels
         }
 
         public ICommand ListViewClicked { get; set; }
+        
+
+        private ListView listaPrincipal;
+
+        public ListView ListaPrincipal
+        {
+            get { return listaPrincipal; }
+            set { listaPrincipal = value; }
+        }
+
+       
+
+        private IList<PersonModel> _listaAux;
+
+        public IList<PersonModel> ListaAux
+        {
+            get { return _listaAux; }
+            set { _listaAux = value; NotifyPropertyChanged(); }
+        }
 
         private IList<PersonModel> _people;
 
@@ -30,6 +49,36 @@ namespace Tribunal.ViewModels
         {
             get { return _people; }
             set { _people = value; NotifyPropertyChanged(); }
+        }
+
+        private string _textoDigitado;
+
+        public string TextoDigitado
+        {
+            get { return _textoDigitado; }
+            set
+            {
+               
+                _textoDigitado = value;
+
+                ListaAux = new List<PersonModel>();
+
+                foreach (PersonModel p in People)
+                {
+                    if (p.FirstName.ToLower().Contains(TextoDigitado.ToLower()))
+                    {
+
+                        ListaAux.Add(p);
+                        ListaPrincipal.ItemsSource = ListaAux;
+                        
+
+                    }
+                    
+                }
+                
+                NotifyPropertyChanged();
+            }
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -40,13 +89,19 @@ namespace Tribunal.ViewModels
 
         public MainViewModel()
         {
+            ListaPrincipal = new ListView();
+            
+           
+
             _personBusiness = new PersonBusiness();
             People = _personBusiness.GetPeople();
-
+            ListaAux = People;
+            ListaPrincipal.ItemsSource = People;
             ListViewClicked = new Command(() =>
             {
                 Global.PersonSelected = PersonSelected;
                 MessagingCenter.Send<PersonModel>(PersonSelected, "ShowDetail");
+               
             });
         }
     }
