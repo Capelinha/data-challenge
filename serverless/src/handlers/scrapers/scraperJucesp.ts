@@ -22,7 +22,7 @@ export const handler: SNSHandler = async (event: SNSEvent) => {
     try {
 
       const baseUrl = 'https://www.jucesponline.sp.gov.br/GeoJson.aspx';
-      const queryString = person.cnpj ? `?cnpj=${person.cnpj}&hits=10` : `?razao=${person.companyName}&hits=10`;
+      const queryString = person.cnpj ? `?cnpj=${person.cnpj.replace(/\./g,'').replace('-', '').replace('/', '')}&hits=10` : `?razao=${person.companyName}&hits=10`;
       const options = {
           uri: baseUrl + queryString,
       };

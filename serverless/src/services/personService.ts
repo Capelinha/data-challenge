@@ -90,6 +90,7 @@ export class PersonService {
     results['jucesp'] = await this.dataMapper.query(JucespResult, {personId: person.personId}, {indexName: 'personId-index'});
     results['siel'] = await this.dataMapper.query(SielResult, {personId: person.personId}, {indexName: 'personId-index'});
     results['sivec'] = await this.dataMapper.query(SivecResult, {personId: person.personId}, {indexName: 'personId-index'});
+    results['detran'] = await this.dataMapper.query(DetranResult, {personId: person.personId}, {indexName: 'personId-index'});
 
     person['result'] = results;
 

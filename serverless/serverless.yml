@@ -1,5 +1,5 @@
 service:
-  name: am-serverless-4
+  name: am-serverless-2
 
 plugins:
   - serverless-webpack
@@ -16,7 +16,7 @@ provider:
   role:
     Fn::ImportValue: functionRoleArn-${self:custom.stage}
   deploymentBucket:
-    name: am-serverless-4-bucket-${self:custom.stage}
+    name: am-serverless-2-bucket-${self:custom.stage}
   environment: ${file(./conf/env.yml):${self:custom.stage}}
 
 custom:
@@ -58,38 +58,38 @@ functions:
   #   events:
   #     - sns: search
   # 2
-  # scraperJucesp:
-  #   handler: src/handlers/scrapers/scraperJucesp.handler
-  #   layers:
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
-  #   memorySize: 1156
-  #   timeout: 30
-  #   events:
-  #     - sns: arn:aws:sns:us-east-1:770168723546:search
-  # scraperSivec:
-  #   handler: src/handlers/scrapers/scraperSivec.handler
-  #   layers:
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
-  #   memorySize: 1156
-  #   timeout: 30
-  #   events:
-  #     - sns: arn:aws:sns:us-east-1:770168723546:search
-  # scraperArpensp:
-  #   handler: src/handlers/scrapers/scraperArpensp.handler
-  #   layers:
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
-  #   memorySize: 1156
-  #   timeout: 30
-  #   events:
-  #     - sns: arn:aws:sns:us-east-1:770168723546:search
-  # scraperSiel:
-  #   handler: src/handlers/scrapers/scraperSiel.handler
-  #   layers:
-  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
-  #   memorySize: 1156
-  #   timeout: 30
-  #   events:
-  #     - sns: arn:aws:sns:us-east-1:770168723546:search
+  scraperJucesp:
+    handler: src/handlers/scrapers/scraperJucesp.handler
+    layers:
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
+    memorySize: 1156
+    timeout: 30
+    events:
+      - sns: arn:aws:sns:us-east-1:770168723546:search
+  scraperSivec:
+    handler: src/handlers/scrapers/scraperSivec.handler
+    layers:
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
+    memorySize: 1156
+    timeout: 30
+    events:
+      - sns: arn:aws:sns:us-east-1:770168723546:search
+  scraperArpensp:
+    handler: src/handlers/scrapers/scraperArpensp.handler
+    layers:
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
+    memorySize: 1156
+    timeout: 30
+    events:
+      - sns: arn:aws:sns:us-east-1:770168723546:search
+  scraperSiel:
+    handler: src/handlers/scrapers/scraperSiel.handler
+    layers:
+      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
+    memorySize: 1156
+    timeout: 30
+    events:
+      - sns: arn:aws:sns:us-east-1:770168723546:search
   # 3
   # scraperCensec:
   #   handler: src/handlers/scrapers/scraperCensec.handler
@@ -124,30 +124,30 @@ functions:
   #   events:
   #     - sns: arn:aws:sns:us-east-1:770168723546:search
   # 4
-  scraperArisp:
-    handler: src/handlers/scrapers/scraperArisp.handler
-    layers:
-      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
-    memorySize: 1156
-    timeout: 30
-    events:
-      - sns: arn:aws:sns:us-east-1:770168723546:search
-  scraperCaged:
-    handler: src/handlers/scrapers/scraperCaged.handler
-    layers:
-      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
-    memorySize: 1156
-    timeout: 30
-    events:
-      - sns: arn:aws:sns:us-east-1:770168723546:search
-  scraperDetran:
-    handler: src/handlers/scrapers/scraperDetran.handler
-    layers:
-      - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
-    memorySize: 1156
-    timeout: 30
-    events:
-      - sns: arn:aws:sns:us-east-1:770168723546:search
+  # scraperArisp:
+  #   handler: src/handlers/scrapers/scraperArisp.handler
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
+  #   memorySize: 1156
+  #   timeout: 30
+  #   events:
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
+  # scraperCaged:
+  #   handler: src/handlers/scrapers/scraperCaged.handler
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
+  #   memorySize: 1156
+  #   timeout: 30
+  #   events:
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
+  # scraperDetran:
+  #   handler: src/handlers/scrapers/scraperDetran.handler
+  #   layers:
+  #     - arn:aws:lambda:us-east-1:770168723546:layer:ChromiumSelenium:70
+  #   memorySize: 1156
+  #   timeout: 30
+  #   events:
+  #     - sns: arn:aws:sns:us-east-1:770168723546:search
   # 5
   # createPerson:
   #   handler: src/handlers/create/createPerson.handler
